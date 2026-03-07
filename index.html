@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Account Deletion — DFRNT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f4f2f1;color:#0d0c2c;min-height:100vh;display:flex;flex-direction:column}
+.header{background:#0d0c2c;padding:20px 0;text-align:center}
+.header svg{height:36px}
+.logo-text{color:#fff;font-size:1.5rem;font-weight:700;letter-spacing:.05em}
+.logo-accent{color:#3bc7f4}
+.container{max-width:600px;margin:40px auto;padding:0 20px;flex:1}
+h1{font-size:1.75rem;font-weight:700;margin-bottom:8px}
+.subtitle{color:#555;margin-bottom:32px;line-height:1.6}
+.card{background:#fff;border-radius:12px;padding:32px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.info-box{background:#eef9fe;border-left:4px solid #3bc7f4;padding:16px 20px;border-radius:0 8px 8px 0;margin-bottom:28px;font-size:.9rem;line-height:1.6}
+.info-box strong{display:block;margin-bottom:4px}
+.info-box ul{margin:8px 0 0 18px}
+.info-box li{margin-bottom:4px}
+label{display:block;font-weight:500;margin-bottom:6px;font-size:.9rem}
+input[type="email"],select,textarea{width:100%;padding:12px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:1rem;font-family:inherit;transition:border-color .2s}
+input:focus,select:focus{outline:none;border-color:#3bc7f4}
+.field{margin-bottom:20px}
+.checkbox-field{display:flex;gap:10px;align-items:flex-start;margin-bottom:24px}
+.checkbox-field input[type="checkbox"]{margin-top:3px;width:18px;height:18px;accent-color:#3bc7f4;flex-shrink:0}
+.checkbox-field label{font-weight:400;font-size:.88rem;line-height:1.5;cursor:pointer}
+.btn{background:#3bc7f4;color:#0d0c2c;border:none;padding:14px 32px;font-size:1rem;font-weight:600;border-radius:8px;cursor:pointer;width:100%;transition:background .2s}
+.btn:hover{background:#2ab5e2}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.alt-contact{text-align:center;margin-top:28px;font-size:.88rem;color:#666}
+.alt-contact a{color:#3bc7f4;text-decoration:none;font-weight:500}
+.footer{text-align:center;padding:32px 20px;font-size:.82rem;color:#888}
+.footer a{color:#3bc7f4;text-decoration:none}
+.success{display:none;text-align:center;padding:40px 20px}
+.success .check{width:64px;height:64px;background:#3bc7f4;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:20px}
+.success .check svg{width:32px;height:32px}
+.success h2{margin-bottom:12px;font-size:1.4rem}
+.success p{color:#555;line-height:1.6;max-width:420px;margin:0 auto}
+</style>
+</head>
+<body>
+<div class="header">
+  <span class="logo-text">DFRNT<span class="logo-accent"> Drive</span></span>
+</div>
+
+<div class="container">
+  <div id="form-view">
+    <h1>Request Account Deletion</h1>
+    <p class="subtitle">We're sorry to see you go. Submit the form below and we'll process your request.</p>
+
+    <div class="card">
+      <div class="info-box">
+        <strong>What happens when you delete your account:</strong>
+        <ul>
+          <li>Your account will be deactivated immediately</li>
+          <li>All personal data will be permanently deleted within 30 days</li>
+          <li>Delivery history and trip data will be removed</li>
+          <li>This action cannot be undone</li>
+        </ul>
+      </div>
+
+      <form id="deleteForm" onsubmit="return handleSubmit(event)">
+        <div class="field">
+          <label for="email">Email address associated with your account *</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label for="reason">Reason for leaving (optional)</label>
+          <select id="reason" name="reason">
+            <option value="">— Select a reason —</option>
+            <option value="no-longer-needed">I no longer need the service</option>
+            <option value="switching">Switching to another service</option>
+            <option value="privacy">Privacy concerns</option>
+            <option value="too-complex">The app is too complex</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="checkbox-field">
+          <input type="checkbox" id="confirm" required>
+          <label for="confirm">I understand that deleting my account is permanent and all my data will be removed within 30 days.</label>
+        </div>
+
+        <button type="submit" class="btn">Submit Deletion Request</button>
+      </form>
+    </div>
+
+    <p class="alt-contact">Prefer to contact us directly? Email <a href="mailto:support@deliverdifferent.com">support@deliverdifferent.com</a></p>
+  </div>
+
+  <div id="success-view" class="success">
+    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#0d0c2c" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></div>
+    <h2>Request Received</h2>
+    <p>We've received your account deletion request. You'll receive a confirmation email shortly. Your data will be permanently deleted within 30 days.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="privacy.html">Privacy Policy</a> · © 2026 Deliver Different Ltd. All rights reserved.
+</div>
+
+<script>
+function handleSubmit(e){
+  e.preventDefault();
+  document.getElementById('form-view').style.display='none';
+  document.getElementById('success-view').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  return false;
+}
+</script>
+</body>
+</html>
