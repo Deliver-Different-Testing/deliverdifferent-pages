@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Self-Improving TMS — What We're Building</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0d2137 100%);
+    padding: 48px 32px 40px;
+    text-align: center;
+    border-bottom: 3px solid #1f6feb;
+  }
+  .header .label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #58a6ff;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .header p {
+    font-size: 18px;
+    color: #8b949e;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .confidence-badge {
+    display: inline-block;
+    margin-top: 20px;
+    background: rgba(31, 111, 235, 0.2);
+    border: 1px solid #1f6feb;
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-size: 14px;
+    color: #58a6ff;
+    font-weight: 600;
+  }
+
+  /* CONTAINER */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* SECTION */
+  section { padding: 48px 0; border-bottom: 1px solid #21262d; }
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #58a6ff;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    font-size: 16px;
+    color: #8b949e;
+    margin-bottom: 32px;
+  }
+
+  /* THE PROBLEM — before/after */
+  .split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 600px) { .split-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .card.danger { border-color: #da3633; }
+  .card.success { border-color: #238636; }
+  .card.info { border-color: #1f6feb; }
+  .card.warning { border-color: #d29922; }
+
+  .card-header {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .card.danger .card-header { color: #f85149; }
+  .card.success .card-header { color: #3fb950; }
+  .card.info .card-header { color: #58a6ff; }
+  .card.warning .card-header { color: #e3b341; }
+
+  .card ul { list-style: none; }
+  .card ul li {
+    padding: 6px 0;
+    font-size: 15px;
+    color: #c9d1d9;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .card ul li .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #8b949e;
+    flex-shrink: 0;
+    margin-top: 9px;
+  }
+  .card.danger ul li .dot { background: #f85149; }
+  .card.success ul li .dot { background: #3fb950; }
+  .card.info ul li .dot { background: #58a6ff; }
+
+  /* ARROW */
+  .big-arrow {
+    text-align: center;
+    font-size: 32px;
+    color: #58a6ff;
+    margin: 8px 0;
+    padding: 0;
+  }
+
+  /* THE IDEA — one line */
+  .big-idea {
+    background: linear-gradient(135deg, #1e3a5f, #0d2137);
+    border: 2px solid #1f6feb;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin: 24px 0;
+  }
+  .big-idea .idea-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f0f6fc;
+    line-height: 1.4;
+  }
+  .big-idea .idea-sub {
+    margin-top: 12px;
+    font-size: 15px;
+    color: #8b949e;
+  }
+
+  /* PHASE TABS */
+  .phase-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .phase-tab {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #30363d;
+    background: #161b22;
+    color: #8b949e;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .phase-tab:hover { border-color: #58a6ff; color: #58a6ff; }
+  .phase-tab.active {
+    background: #1f6feb;
+    border-color: #1f6feb;
+    color: white;
+  }
+  .phase-tab .num {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    margin-right: 6px;
+  }
+
+  .phase-panel { display: none; }
+  .phase-panel.active { display: block; }
+
+  .phase-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .phase-card-header {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid #21262d;
+  }
+  .phase-number {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #58a6ff;
+    margin-bottom: 6px;
+  }
+  .phase-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 6px;
+  }
+  .phase-tagline {
+    font-size: 15px;
+    color: #8b949e;
+  }
+  .phase-body { padding: 24px 28px; }
+
+  .phase-what {
+    margin-bottom: 24px;
+  }
+  .phase-what h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8b949e;
+    margin-bottom: 12px;
+  }
+  .phase-what p {
+    font-size: 16px;
+    color: #c9d1d9;
+    line-height: 1.6;
+  }
+
+  .step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #0d1117;
+    border-radius: 8px;
+    border-left: 3px solid #1f6feb;
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #1f6feb;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-text { font-size: 15px; color: #c9d1d9; }
+  .step-text strong { color: #f0f6fc; }
+
+  .gate-box {
+    margin-top: 20px;
+    background: rgba(210, 153, 34, 0.1);
+    border: 1px solid #d29922;
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .gate-icon { font-size: 20px; flex-shrink: 0; }
+  .gate-text { font-size: 14px; color: #e3b341; }
+  .gate-text strong { color: #f0f6fc; display: block; margin-bottom: 3px; }
+
+  /* WHAT ALREADY EXISTS */
+  .exists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .exists-item {
+    background: #161b22;
+    border: 1px solid #238636;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .exists-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #3fb950;
+    margin-bottom: 4px;
+  }
+  .exists-desc {
+    font-size: 13px;
+    color: #8b949e;
+    line-height: 1.5;
+  }
+
+  .new-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .new-item {
+    background: #161b22;
+    border: 1px solid #1f6feb;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .new-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #58a6ff;
+    margin-bottom: 4px;
+  }
+  .new-desc {
+    font-size: 13px;
+    color: #8b949e;
+    line-height: 1.5;
+  }
+
+  /* ACTION REQUIRED */
+  .action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: #161b22;
+    border-radius: 10px;
+    border: 1px solid #30363d;
+  }
+  .action-item.you { border-left: 4px solid #1f6feb; }
+  .action-item.clawdia { border-left: 4px solid #238636; }
+  .action-icon { font-size: 22px; flex-shrink: 0; }
+  .action-body { flex: 1; }
+  .action-who {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .action-item.you .action-who { color: #58a6ff; }
+  .action-item.clawdia .action-who { color: #3fb950; }
+  .action-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 4px;
+  }
+  .action-desc { font-size: 14px; color: #8b949e; }
+
+  /* WARNING BOX */
+  .warning-box {
+    background: rgba(248, 81, 73, 0.08);
+    border: 1px solid #da3633;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 16px;
+  }
+  .warning-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f85149;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .warning-box p {
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.6;
+  }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 32px 0;
+  }
+  .flow-node {
+    background: #161b22;
+    border: 2px solid #1f6feb;
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-align: center;
+    min-width: 120px;
+  }
+  .flow-node.phase1 { border-color: #1f6feb; }
+  .flow-node.phase2 { border-color: #d29922; }
+  .flow-node.phase3 { border-color: #238636; }
+  .flow-node .fn { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .flow-node.phase1 .fn { color: #58a6ff; }
+  .flow-node.phase2 .fn { color: #e3b341; }
+  .flow-node.phase3 .fn { color: #3fb950; }
+  .flow-node .ft { font-size: 14px; font-weight: 700; color: #f0f6fc; }
+  .flow-arrow {
+    font-size: 24px;
+    color: #30363d;
+    margin: 0 8px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 600px) {
+    .flow { flex-direction: column; gap: 4px; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+
+  /* METRIC ROWS */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .metric-item {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .metric-label { font-size: 12px; color: #8b949e; margin-bottom: 4px; font-weight: 600; }
+  .metric-value { font-size: 22px; font-weight: 800; color: #f0f6fc; margin-bottom: 2px; }
+  .metric-sub { font-size: 12px; color: #58a6ff; }
+
+  /* TOGGLE */
+  details {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  summary {
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #c9d1d9;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before {
+    content: '▶';
+    font-size: 10px;
+    color: #58a6ff;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  details[open] summary::before { transform: rotate(90deg); }
+  .details-body { padding: 0 20px 20px; font-size: 15px; color: #8b949e; line-height: 1.7; }
+  .details-body p { margin-bottom: 8px; }
+  .details-body p:last-child { margin-bottom: 0; }
+
+  /* FOOTER */
+  .footer {
+    background: #161b22;
+    border-top: 1px solid #21262d;
+    padding: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: #484f58;
+  }
+  .footer span { color: #58a6ff; }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+  .tag.go { background: rgba(35, 134, 54, 0.2); color: #3fb950; }
+  .tag.wait { background: rgba(210, 153, 34, 0.2); color: #e3b341; }
+  .tag.future { background: rgba(31, 111, 235, 0.15); color: #58a6ff; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">COE Final Verdict — March 7, 2026</div>
+  <h1>The Self-Improving TMS</h1>
+  <p>What we're building, why, and in what order — in plain English</p>
+  <div class="confidence-badge">Council confidence: 87/100 &nbsp;·&nbsp; Both models agreed</div>
+</div>
+
+<div class="container">
+
+  <!-- THE PROBLEM -->
+  <section>
+    <div class="section-label">The Problem</div>
+    <div class="section-title">You have the tools. They don't talk to each other.</div>
+    <div class="section-subtitle">Everything you need already exists — the pieces just don't learn from each other.</div>
+
+    <div class="split-grid">
+      <div class="card danger">
+        <div class="card-header">Right Now</div>
+        <ul>
+          <li><span class="dot"></span>Email parser books jobs — but doesn't learn from corrections</li>
+          <li><span class="dot"></span>Auto-dispatch shows suggestions — but doesn't know why you change them</li>
+          <li><span class="dot"></span>Clawdia builds features — but doesn't improve from deployment results</li>
+          <li><span class="dot"></span>Each tool works alone — no shared intelligence</li>
+          <li><span class="dot"></span>Every human decision is a training signal that gets lost</li>
+        </ul>
+      </div>
+      <div class="card success">
+        <div class="card-header">After We Build This</div>
+        <ul>
+          <li><span class="dot"></span>Every human override teaches the system what to do next time</li>
+          <li><span class="dot"></span>Dispatch decisions get automated — humans only handle edge cases</li>
+          <li><span class="dot"></span>Clawdia finds patterns, writes fixes, tests them, opens a PR</li>
+          <li><span class="dot"></span>New customer onboarding requires zero dev involvement</li>
+          <li><span class="dot"></span>You hold the production deploy gate. Everything else runs itself.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="big-idea">
+      <div class="idea-text">Build the missing feedback layer that connects your existing tools — so every human decision makes the whole system smarter.</div>
+      <div class="idea-sub">Not a rebuild. Not a new product. A nervous system connecting what already exists.</div>
+    </div>
+  </section>
+
+  <!-- WHAT WE'RE BUILDING -->
+  <section>
+    <div class="section-label">The Architecture</div>
+    <div class="section-title">Three phases. One direction.</div>
+    <div class="section-subtitle">Each phase unlocks the next. You can't run Phase 2 until Phase 1 proves itself.</div>
+
+    <div class="flow">
+      <div class="flow-node phase1">
+        <div class="fn">Phase 1</div>
+        <div class="ft">Record Everything</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node phase2">
+        <div class="fn">Phase 2</div>
+        <div class="ft">Learn From It</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node phase3">
+        <div class="fn">Phase 3</div>
+        <div class="ft">Fix Itself</div>
+      </div>
+    </div>
+
+    <!-- PHASE TABS -->
+    <div class="phase-tabs">
+      <div class="phase-tab active" onclick="showPhase(1)"><span class="num">1</span>Signal Capture</div>
+      <div class="phase-tab" onclick="showPhase(2)"><span class="num">2</span>Learning Loop</div>
+      <div class="phase-tab" onclick="showPhase(3)"><span class="num">3</span>Auto-Build Pipeline</div>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase-panel active" id="phase-1">
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-number">Phase 1 &nbsp;·&nbsp; Build this first <span class="tag go">Build Now</span></div>
+          <div class="phase-name">Signal Capture — Record Every Human Decision</div>
+          <div class="phase-tagline">Every time a dispatcher changes the AI's suggestion, we capture why. That's the training data.</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-what">
+            <h4>What it is in plain English</h4>
+            <p>Right now, when a dispatcher overrides the AI's job assignment, that knowledge disappears. We're building a simple recording system — every AI decision + what the human actually did + why — stored in a secure database. Think of it as a flight data recorder for every decision in your TMS.</p>
+          </div>
+          <h4 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:12px;">What gets built</h4>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Decision log database</strong> — a new service that records AI suggestion + human choice + outcome for every dispatch decision. Tenant-isolated. Append-only (it never gets edited — this is the ground truth).</div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>3-tap override UI</strong> in Auto-Dispatch — when you change the AI's suggestion, you tap one of three reasons: "AI was wrong" / "Business exception" / "My preference." One tap. That context is gold for training.</div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Connect the existing tools</strong> — email parser, auto-dispatch, and all of Clawdia's MCP tool calls automatically emit a signal whenever a human reviews or changes an AI outcome. No manual logging.</div>
+            </li>
+          </ul>
+          <div class="gate-box">
+            <div class="gate-icon">🚦</div>
+            <div class="gate-text">
+              <strong>Gate to Phase 2:</strong> 100 real override signals captured across at least 3 customers. With less data than this, the learning loop is just guessing.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase-panel" id="phase-2">
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-number">Phase 2 &nbsp;·&nbsp; Unlocks after Phase 1 gate <span class="tag wait">After 100 Signals</span></div>
+          <div class="phase-name">Learning Loop — Turn Data Into Better Decisions</div>
+          <div class="phase-tagline">After every 100 overrides, the system analyzes what it got wrong and updates its own decision rules.</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-what">
+            <h4>What it is in plain English</h4>
+            <p>Once we have enough data from Phase 1, the system runs a "learning cycle" — it looks at every dispatch decision that a human overrode, figures out the pattern ("when it's a medical run on a Friday after 4pm, don't assign Driver X"), and writes that as a rule. The rule is tested on half your dispatches for a week. If override rates drop, the rule is promoted and becomes the new default. If they don't improve, it's discarded automatically.</p>
+          </div>
+          <h4 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:12px;">What gets built</h4>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Learning cycle scheduler</strong> — triggers automatically every 100 new override signals per customer. Groups overrides by type, identifies patterns, generates structured decision rules (not vague notes — actual testable logic).</div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>A/B rule testing</strong> — new rule applies to 50% of decisions for 1 week. If override rate drops by more than 3%, the rule wins and goes to 100%. If not, it's discarded. You never see bad rules in production.</div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Kill switch</strong> — if override rate spikes up by 5% at any time, learning cycles freeze and the last good ruleset is restored. Automatically. No human needed.</div>
+            </li>
+          </ul>
+          <div class="gate-box">
+            <div class="gate-icon">🚦</div>
+            <div class="gate-text">
+              <strong>Gate to Phase 3:</strong> 2 learning cycles must complete and show measurable improvement (override rate down, job completion rate stable or up). If the learning loop isn't working, we fix it before adding the build pipeline.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase-panel" id="phase-3">
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-number">Phase 3 &nbsp;·&nbsp; After 2 validated learning cycles <span class="tag future">Future Phase</span></div>
+          <div class="phase-name">Autonomous Build Pipeline — Clawdia Fixes Bugs Herself</div>
+          <div class="phase-tagline">Clawdia spots patterns that need code changes, writes the fix, tests it, and hands you a PR to review.</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-what">
+            <h4>What it is in plain English</h4>
+            <p>By Phase 3, the decision log is rich enough that Clawdia can spot "there's a code bug causing this override pattern" — not just a rule update. She writes the code fix, runs the full Playwright test suite (which already exists), and if tests pass, she opens a pull request with a risk label attached. You review and merge. You never write a ticket for routine patterns again.</p>
+          </div>
+          <h4 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:12px;">What gets built</h4>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Weekly pattern scan</strong> — Clawdia reviews the decision log for override clusters that point to code issues vs. rule issues. Code issues go to the build pipeline. Rule issues go to the learning loop.</div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Auto-PR with risk classification</strong> — every PR Clawdia opens is labelled LOW / MEDIUM / HIGH. LOW = config change (auto-mergeable after tests). MEDIUM/HIGH = requires your review. Clear, no ambiguity.</div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Shadow deploy for risky changes</strong> — MEDIUM and HIGH risk changes run at 5% of real traffic for 3 days before full rollout. If something breaks, it breaks for 5% — not everyone.</div>
+            </li>
+          </ul>
+          <div class="gate-box">
+            <div class="gate-icon">🔑</div>
+            <div class="gate-text">
+              <strong>You hold the production key.</strong> Clawdia can deploy to staging and open PRs — she cannot merge to production without your approval. This never changes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT EXISTS VS WHAT'S NEW -->
+  <section>
+    <div class="section-label">The Build</div>
+    <div class="section-title">What already exists vs. what's new</div>
+    <div class="section-subtitle">Most of the heavy infrastructure is already live. We're building the connective tissue.</div>
+
+    <div class="section-label" style="margin-bottom:10px;">Already exists — don't rebuild</div>
+    <div class="exists-grid">
+      <div class="exists-item">
+        <div class="exists-name">MCP Server</div>
+        <div class="exists-desc">183 tools. Full TMS API surface already exposed to AI. This is the bridge.</div>
+      </div>
+      <div class="exists-item">
+        <div class="exists-name">Email Parser</div>
+        <div class="exists-desc">Already books jobs from emails automatically. Just needs to emit signals.</div>
+      </div>
+      <div class="exists-item">
+        <div class="exists-name">Auto-Dispatch UI</div>
+        <div class="exists-desc">Already shows AI suggestions. Just needs the 3-tap override reason added.</div>
+      </div>
+      <div class="exists-item">
+        <div class="exists-name">Playwright Tests</div>
+        <div class="exists-desc">Full E2E test suite already running. Phase 3 builds on top of it.</div>
+      </div>
+      <div class="exists-item">
+        <div class="exists-name">Clawdia + ClawdMode</div>
+        <div class="exists-desc">Both AI agents already running 24/7. They become the DRIs for each phase.</div>
+      </div>
+      <div class="exists-item">
+        <div class="exists-name">App Configurator</div>
+        <div class="exists-desc">Workflow and feature flag config already in place per tenant.</div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:28px;margin-bottom:10px;">New to build</div>
+    <div class="new-grid">
+      <div class="new-item">
+        <div class="new-name">Decision Intelligence Service</div>
+        <div class="new-desc">New Railway service: append-only event log. 12-field schema. Tenant-isolated.</div>
+      </div>
+      <div class="new-item">
+        <div class="new-name">Override Context UI</div>
+        <div class="new-desc">3-tap dropdown in Auto-Dispatch. 2 hours to build. Biggest training signal unlock.</div>
+      </div>
+      <div class="new-item">
+        <div class="new-name">Learning Cycle Engine</div>
+        <div class="new-desc">Clusters signals, generates structured rules, A/B tests them, promotes or discards.</div>
+      </div>
+      <div class="new-item">
+        <div class="new-name">Build Pipeline</div>
+        <div class="new-desc">Clawdia's code change → Playwright → PR with risk label. Phase 3 only.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU NEED TO DO -->
+  <section>
+    <div class="section-label">Your Role</div>
+    <div class="section-title">What Mike needs to do</div>
+    <div class="section-subtitle">Two things before Clawdia can start building Phase 1.</div>
+
+    <div class="action-list">
+      <div class="action-item you">
+        <div class="action-icon">👀</div>
+        <div class="action-body">
+          <div class="action-who">Mike — Do This First</div>
+          <div class="action-title">Review the 12-field event log schema</div>
+          <div class="action-desc">This database is append-only and permanent. A mistake in the schema means permanently corrupt training data — can't be fixed without losing history. Clawdia will present the schema for your review before she builds anything. Takes 10 minutes. Non-negotiable.</div>
+        </div>
+      </div>
+      <div class="action-item you">
+        <div class="action-icon">📄</div>
+        <div class="action-body">
+          <div class="action-who">Mike — Check Contracts</div>
+          <div class="action-title">Review Medical Couriers contract for data separation requirements</div>
+          <div class="action-desc">The default setup stores all tenants in one shared database (row-level security). Some medical/regulated customers may contractually require their data to be physically separate. Check the Medical Couriers contract before Clawdia builds the data layer. If they require physical separation, it's easy to do in Phase 1 — hard to do after.</div>
+        </div>
+      </div>
+      <div class="action-item clawdia">
+        <div class="action-icon">⚡</div>
+        <div class="action-body">
+          <div class="action-who">Clawdia — Handles Everything Else</div>
+          <div class="action-title">Builds all three phases autonomously</div>
+          <div class="action-desc">Phase 1 architecture, Decision Intelligence service, MCP signal endpoints, override UI, learning cycle engine, build pipeline. You review the schema and the medical couriers contract — Clawdia handles the rest. You'll hold the production deploy gate at Phase 3.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT COULD GO WRONG -->
+  <section>
+    <div class="section-label">The Risk</div>
+    <div class="section-title">The one thing that could break this</div>
+    <div class="section-subtitle">The council flagged one specific failure mode worth knowing about.</div>
+
+    <div class="warning-box">
+      <div class="warning-title">⚠️ Goodhart's Law</div>
+      <p>If the system's only goal is "reduce the number of times dispatchers override the AI," it will learn to make <em>confident-sounding recommendations that dispatchers don't bother to override</em> — not <em>better dispatch decisions</em>. The AI gets lazily trusted, not genuinely better.</p>
+    </div>
+
+    <div class="card info" style="margin-top:16px;">
+      <div class="card-header">The Fix (built in from day one)</div>
+      <ul>
+        <li><span class="dot"></span>Track two metrics separately: override rate AND job outcome rate (completion, disputes, driver satisfaction)</li>
+        <li><span class="dot"></span>If override rate goes down but job disputes go up — the system is gaming the metric. Automatic alert.</li>
+        <li><span class="dot"></span>The event log schema includes an "outcome" field for every decision. This is how we separate "accepted but wrong" from "overridden but right."</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SUCCESS METRICS -->
+  <section>
+    <div class="section-label">What Success Looks Like</div>
+    <div class="section-title">How we know it's working</div>
+
+    <div class="metric-grid">
+      <div class="metric-item">
+        <div class="metric-label">Target automation rate</div>
+        <div class="metric-value">90%+</div>
+        <div class="metric-sub">of dispatch decisions without human input</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Phase 2 unlock signal</div>
+        <div class="metric-value">100</div>
+        <div class="metric-sub">override signals across 3+ tenants</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Learning cycle improvement</div>
+        <div class="metric-value">3pp+</div>
+        <div class="metric-sub">override rate reduction per cycle to promote a rule</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Kill switch trigger</div>
+        <div class="metric-value">5pp</div>
+        <div class="metric-sub">spike in override rate → freeze everything</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section>
+    <div class="section-label">Common Questions</div>
+    <div class="section-title">Things you might be wondering</div>
+
+    <details>
+      <summary>Can this break existing customers?</summary>
+      <div class="details-body">
+        <p>No. Phase 1 is purely additive — we're adding recording, not changing any existing logic. The 3-tap override UI is optional context, not a blocker. The AI still works exactly as it does today. Learning rules don't change dispatch behavior until they pass A/B testing. Every change to dispatch logic is tested before it touches real traffic.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Who owns production deployments?</summary>
+      <div class="details-body">
+        <p>You do. Clawdia can build, test, and open pull requests. She cannot merge to production without your explicit approval. This is a hard guardrail in Phase 3 — it doesn't change regardless of how confident the AI is. Compliance and billing code paths always require human review regardless of risk classification.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What does Clawdia do vs. what does ClawdMode do?</summary>
+      <div class="details-body">
+        <p>Clawdia (Dane's AI) is the product builder — she owns the three phases, builds the code, runs learning cycles, and opens PRs. ClawdMode (your AI) is the ops validator — she checks that learning cycle outputs are consistent with your customer SLAs, routes exceptions correctly, and escalates anything operational to you. Think of Clawdia as the engineering lead and ClawdMode as the customer success QA.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>When does cross-tenant learning happen? (e.g., what Medical Couriers teaches applies to OTG Cargo)</summary>
+      <div class="details-body">
+        <p>Not in Phases 1–3. Cross-tenant aggregation is deferred until after Phase 3 is live, all tenants are on per-tenant learning, and a legal review of data sharing across customers is complete. There's real value in cross-tenant learning (a pattern from one medical courier applies to another), but it requires careful legal groundwork first. It's in the roadmap as a post-Phase-3 conditional item.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What if a customer has very few dispatch decisions per week?</summary>
+      <div class="details-body">
+        <p>Low-volume tenants (under 30 overrides/week) can't run per-tenant learning cycles fast enough to be useful. This is an open question the council flagged as unresolved — the answer depends on actual signal volume data we'll only have after Phase 1 runs for 30 days. Once we know actual volumes, we pick one of: longer accumulation window, vertical pooling (medical couriers learn from other medical couriers), or generalized baseline model. No decision needed yet.</p>
+      </div>
+    </details>
+  </section>
+
+</div>
+
+<div class="footer">
+  COE Final Verdict &nbsp;·&nbsp; <span>87/100 confidence</span> &nbsp;·&nbsp; Opus + GPT-5.4 &nbsp;·&nbsp; March 7, 2026 &nbsp;·&nbsp; ClawdMode
+</div>
+
+<script>
+  function showPhase(n) {
+    document.querySelectorAll('.phase-tab').forEach((t, i) => {
+      t.classList.toggle('active', i === n - 1);
+    });
+    document.querySelectorAll('.phase-panel').forEach((p, i) => {
+      p.classList.toggle('active', i === n - 1);
+    });
+  }
+</script>
+
+</body>
+</html>
