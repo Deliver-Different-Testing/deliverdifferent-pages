@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClawdMode Self-Improvement — What We're Building</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0d1117; color: #e6edf3; line-height: 1.6; min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%);
+    padding: 48px 32px 40px; text-align: center;
+    border-bottom: 3px solid #7c3aed;
+  }
+  .header .label { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: #a78bfa; text-transform: uppercase; margin-bottom: 12px; }
+  .header h1 { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 12px; line-height: 1.2; }
+  .header p { font-size: 18px; color: #8b949e; max-width: 600px; margin: 0 auto; }
+  .badge { display: inline-flex; gap: 16px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+  .badge span {
+    background: rgba(124,58,237,0.15); border: 1px solid #7c3aed;
+    border-radius: 20px; padding: 5px 16px; font-size: 13px; color: #a78bfa; font-weight: 600;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 48px 0; border-bottom: 1px solid #21262d; }
+  section:last-child { border-bottom: none; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #a78bfa; text-transform: uppercase; margin-bottom: 8px; }
+  .section-title { font-size: 26px; font-weight: 700; color: #f0f6fc; margin-bottom: 8px; }
+  .section-sub { font-size: 16px; color: #8b949e; margin-bottom: 32px; }
+
+  /* BIG IDEA */
+  .big-idea {
+    background: linear-gradient(135deg, #1a1a2e, #0d1117);
+    border: 2px solid #7c3aed; border-radius: 16px; padding: 32px; text-align: center; margin: 24px 0;
+  }
+  .big-idea .text { font-size: 22px; font-weight: 700; color: #f0f6fc; line-height: 1.4; }
+  .big-idea .sub { margin-top: 12px; font-size: 15px; color: #8b949e; }
+
+  /* KARPATHY ANALOGY TABLE */
+  .analogy-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+  .analogy-table th {
+    padding: 12px 16px; font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #8b949e; background: #161b22;
+    border-bottom: 1px solid #30363d; text-align: left;
+  }
+  .analogy-table td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid #21262d; vertical-align: top; }
+  .analogy-table tr:last-child td { border-bottom: none; }
+  .analogy-table .col-a { color: #e3b341; font-weight: 600; }
+  .analogy-table .col-b { color: #58a6ff; }
+  .analogy-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* PHASE TABS */
+  .phase-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .phase-tab {
+    padding: 10px 18px; border-radius: 8px; border: 1px solid #30363d;
+    background: #161b22; color: #8b949e; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .phase-tab:hover { border-color: #7c3aed; color: #a78bfa; }
+  .phase-tab.active { background: #7c3aed; border-color: #7c3aed; color: white; }
+  .phase-tab .num {
+    display: inline-block; width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); text-align: center; line-height: 20px;
+    font-size: 12px; margin-right: 6px;
+  }
+  .phase-panel { display: none; }
+  .phase-panel.active { display: block; }
+
+  .phase-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; overflow: hidden; }
+  .phase-card-header { padding: 24px 28px 18px; border-bottom: 1px solid #21262d; }
+  .phase-num { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #a78bfa; margin-bottom: 6px; }
+  .phase-name { font-size: 22px; font-weight: 700; color: #f0f6fc; margin-bottom: 4px; }
+  .phase-tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+  .tag-gate { background: rgba(210,153,34,0.2); color: #e3b341; }
+  .tag-now { background: rgba(35,134,54,0.2); color: #3fb950; }
+  .tag-auto { background: rgba(31,111,235,0.15); color: #58a6ff; }
+  .tag-human { background: rgba(248,81,73,0.1); color: #f85149; }
+  .phase-tagline { font-size: 15px; color: #8b949e; }
+  .phase-body { padding: 24px 28px; }
+  .phase-what { margin-bottom: 24px; }
+  .phase-what h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 10px; }
+  .phase-what p { font-size: 15px; color: #c9d1d9; line-height: 1.6; }
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .step-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: #0d1117; border-radius: 8px; border-left: 3px solid #7c3aed; }
+  .step-num { width: 24px; height: 24px; border-radius: 50%; background: #7c3aed; color: white; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 14px; color: #c9d1d9; }
+  .step-text strong { color: #f0f6fc; }
+  .gate-box { margin-top: 18px; background: rgba(210,153,34,0.08); border: 1px solid #d29922; border-radius: 8px; padding: 14px 16px; display: flex; gap: 10px; }
+  .gate-icon { font-size: 18px; flex-shrink: 0; }
+  .gate-text { font-size: 14px; color: #e3b341; }
+  .gate-text strong { color: #f0f6fc; display: block; margin-bottom: 2px; }
+
+  /* DECISIONS */
+  .decision-list { display: flex; flex-direction: column; gap: 12px; }
+  .decision-item { background: #161b22; border: 1px solid #30363d; border-radius: 10px; overflow: hidden; }
+  .decision-header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+  .decision-q { font-size: 15px; font-weight: 600; color: #f0f6fc; }
+  .decision-winner { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .winner-codex { background: rgba(58,130,246,0.15); color: #58a6ff; }
+  .winner-opus { background: rgba(124,58,237,0.15); color: #a78bfa; }
+  .winner-tie { background: rgba(35,134,54,0.15); color: #3fb950; }
+  .decision-body { padding: 0 20px 18px; display: none; }
+  .decision-item.open .decision-body { display: block; }
+  .decision-item.open .decision-header { border-bottom: 1px solid #21262d; }
+  .versus { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 600px) { .versus { grid-template-columns: 1fr; } }
+  .versus-side { padding: 12px; border-radius: 8px; font-size: 13px; color: #c9d1d9; line-height: 1.5; }
+  .versus-side.opus { background: rgba(124,58,237,0.08); border-left: 3px solid #7c3aed; }
+  .versus-side.codex { background: rgba(31,111,235,0.08); border-left: 3px solid #1f6feb; }
+  .versus-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .versus-side.opus .versus-label { color: #a78bfa; }
+  .versus-side.codex .versus-label { color: #58a6ff; }
+  .verdict-box { background: rgba(35,134,54,0.08); border: 1px solid #238636; border-radius: 8px; padding: 14px 16px; font-size: 14px; color: #c9d1d9; line-height: 1.5; }
+  .verdict-box strong { color: #3fb950; }
+
+  /* CONTROLS */
+  .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .control-grid { grid-template-columns: 1fr; } }
+  .control-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 18px; }
+  .control-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .control-card.auto .control-label { color: #3fb950; }
+  .control-card.human .control-label { color: #f85149; }
+  .control-card ul { list-style: none; }
+  .control-card ul li { padding: 4px 0; font-size: 14px; color: #c9d1d9; display: flex; align-items: flex-start; gap: 8px; }
+  .control-card.auto ul li::before { content: '✓'; color: #3fb950; flex-shrink: 0; font-weight: 700; }
+  .control-card.human ul li::before { content: '🔑'; flex-shrink: 0; }
+
+  /* ACTION */
+  .action-list { display: flex; flex-direction: column; gap: 10px; }
+  .action-item { display: flex; align-items: flex-start; gap: 14px; padding: 18px; background: #161b22; border-radius: 10px; border: 1px solid #30363d; }
+  .action-item.you { border-left: 4px solid #7c3aed; }
+  .action-item.clawdmode { border-left: 4px solid #238636; }
+  .action-icon { font-size: 20px; flex-shrink: 0; }
+  .action-who { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 3px; }
+  .action-item.you .action-who { color: #a78bfa; }
+  .action-item.clawdmode .action-who { color: #3fb950; }
+  .action-title { font-size: 15px; font-weight: 700; color: #f0f6fc; margin-bottom: 3px; }
+  .action-desc { font-size: 13px; color: #8b949e; }
+
+  /* METRICS */
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+  .metric-item { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; }
+  .metric-label { font-size: 12px; color: #8b949e; margin-bottom: 4px; font-weight: 600; }
+  .metric-value { font-size: 24px; font-weight: 800; color: #f0f6fc; margin-bottom: 2px; }
+  .metric-sub { font-size: 12px; color: #a78bfa; }
+
+  /* WARNING */
+  .warning-box { background: rgba(248,81,73,0.07); border: 1px solid #da3633; border-radius: 10px; padding: 18px 22px; margin-top: 12px; }
+  .warning-title { font-size: 15px; font-weight: 700; color: #f85149; margin-bottom: 8px; }
+  .warning-box p { font-size: 14px; color: #c9d1d9; line-height: 1.6; }
+
+  /* FAQ */
+  details { background: #161b22; border: 1px solid #30363d; border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+  summary { padding: 16px 20px; font-size: 15px; font-weight: 600; color: #c9d1d9; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: '▶'; font-size: 10px; color: #a78bfa; transition: transform 0.2s; flex-shrink: 0; }
+  details[open] summary::before { transform: rotate(90deg); }
+  .details-body { padding: 0 20px 18px; font-size: 14px; color: #8b949e; line-height: 1.7; }
+
+  .footer { background: #161b22; border-top: 1px solid #21262d; padding: 24px; text-align: center; font-size: 13px; color: #484f58; }
+  .footer span { color: #a78bfa; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">COE Final Verdict — March 8, 2026</div>
+  <h1>ClawdMode Self-Improvement Loop</h1>
+  <p>Applying Karpathy's autoresearch pattern to make your AI assistant get better overnight — automatically</p>
+  <div class="badge">
+    <span>78/100 confidence</span>
+    <span>Opus + GPT-5.4 · 2 rounds</span>
+    <span>4 phases · fully reversible</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- THE IDEA -->
+  <section>
+    <div class="section-label">The Core Idea</div>
+    <div class="section-title">Your corrections become training data. Overnight.</div>
+    <div class="section-sub">Every time you tell me "stop doing X" or "you should have done Y" — that's a signal. Right now it goes into MEMORY.md manually and gets forgotten. This system captures every correction, turns it into a test, and runs improvement experiments while you sleep.</div>
+
+    <div class="big-idea">
+      <div class="text">You stop editing my instruction files. You just correct me naturally. The system figures out the right edit, tests it, and promotes it if it passes.</div>
+      <div class="sub">Karpathy's autoresearch for ML training → same loop, applied to prompt engineering</div>
+    </div>
+
+    <h4 style="font-size:13px;color:#8b949e;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">The Karpathy analogy — mapped to ClawdMode</h4>
+    <table class="analogy-table">
+      <thead>
+        <tr>
+          <th>Karpathy's autoresearch</th>
+          <th>ClawdMode equivalent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-a">train.py — the code the agent modifies</td><td class="col-b">Skill files (SKILL.md) — the instructions the loop modifies</td></tr>
+        <tr><td class="col-a">program.md — human programs the research org</td><td class="col-b">SOUL.md + AGENTS.md — you program how ClawdMode behaves (never touched automatically)</td></tr>
+        <tr><td class="col-a">val_bpb — single objective metric, lower = better</td><td class="col-b">Eval harness — 5+ test cases per skill, scored by AI judge, built from your corrections</td></tr>
+        <tr><td class="col-a">5-minute training run</td><td class="col-b">Overnight sub-agent session (~10 per night, $0.20 total)</td></tr>
+        <tr><td class="col-a">Keep or discard change</td><td class="col-b">Auto-promote if score improves, discard if not, circuit-break if 3 consecutive failures</td></tr>
+        <tr><td class="col-a">~100 experiments overnight</td><td class="col-b">10 skill iterations overnight (quality over quantity at this scale)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- PHASES -->
+  <section>
+    <div class="section-label">The Build</div>
+    <div class="section-title">Four phases. Each gates the next.</div>
+    <div class="section-sub">Can't skip ahead. Phase 0 is a hard gate — nothing starts until the infrastructure is stable.</div>
+
+    <div class="phase-tabs">
+      <div class="phase-tab active" onclick="showPhase(0)"><span class="num">0</span>Fix Reliability</div>
+      <div class="phase-tab" onclick="showPhase(1)"><span class="num">1</span>Instrument</div>
+      <div class="phase-tab" onclick="showPhase(2)"><span class="num">2</span>Skill Loop</div>
+      <div class="phase-tab" onclick="showPhase(3)"><span class="num">3</span>Behavioral</div>
+    </div>
+
+    <div class="phase-panel active" id="phase-0">
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-num">Phase 0 <span class="phase-tag tag-now">Do This First</span></div>
+          <div class="phase-name">Fix the Broken Foundation</div>
+          <div class="phase-tagline">You can't improve a system that's failing. Fix the 401 errors and duplicate heartbeats first.</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-what">
+            <h4>What this means in plain English</h4>
+            <p>Morning Briefing and Memory Audit cron jobs have been failing with "401 Unauthorized" errors. The heartbeat was firing 2–3x per interval. Running an improvement loop on top of these failures means the loop would be optimizing a broken baseline — like tuning an engine that has a coolant leak. Fix the plumbing first.</p>
+          </div>
+          <ul class="step-list">
+            <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Fix Anthropic 401 auth errors</strong> on Morning Briefing and Memory Audit. Diagnose root cause (token expiry vs. config drift). Verify with 3 consecutive successful runs.</div></li>
+            <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Fix duplicate heartbeat</strong> — add a 30-second dedup guard to heartbeat-state.json so two firings within 30s are collapsed to one.</div></li>
+            <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Clean 48-hour cron run</strong> — all jobs succeed, no duplicates, no auth errors. This is the Phase 0 exit gate.</div></li>
+          </ul>
+          <div class="gate-box">
+            <div class="gate-icon">🚦</div>
+            <div class="gate-text"><strong>Gate to Phase 1:</strong> 48 consecutive hours with zero auth errors and zero duplicate heartbeat firings. No exceptions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-panel" id="phase-1">
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-num">Phase 1 <span class="phase-tag tag-gate">After Phase 0</span></div>
+          <div class="phase-name">Instrumentation — Mine Corrections, Build Eval Harness</div>
+          <div class="phase-tagline">Turn 30 days of your corrections into a test battery. This is the val_bpb equivalent.</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-what">
+            <h4>What this means in plain English</h4>
+            <p>A sub-agent reads every daily memory file from the last 30 days and extracts every correction you've made. "Use PT time," "stop running on weekends," "be more concise" — each becomes a labeled test case. The eval harness is just those test cases in a format that can be run automatically. Once a skill has 5+ test cases, it can enter the improvement loop.</p>
+          </div>
+          <ul class="step-list">
+            <li class="step-item"><div class="step-num">A</div><div class="step-text"><strong>Mine corrections from memory files</strong> — sub-agent reads 30 days of daily logs, extracts ~15–25 labeled corrections. Saves to memory/correction-corpus.json with categories: format, tone, missed context, wrong priority, hallucination, config.</div></li>
+            <li class="step-item"><div class="step-num">B</div><div class="step-text"><strong>Build eval runner</strong> (runs parallel with A) — a small JS script that takes a skill file + test cases, runs each through a Sonnet call, scores pass/fail. Returns aggregate score. Estimated: ~30 lines of code, costs $0.02/run.</div></li>
+            <li class="step-item"><div class="step-num">C</div><div class="step-text"><strong>Wire correction capture going forward</strong> — ClawdMode detects when you're correcting behavior (keywords: "don't," "stop," "wrong," "next time") and logs to correction-inbox.json automatically. Weekly cron converts new corrections into test cases.</div></li>
+          </ul>
+          <div class="gate-box">
+            <div class="gate-icon">🚦</div>
+            <div class="gate-text"><strong>Gate to Phase 2:</strong> At least 1 skill has ≥5 test cases AND the eval runner produces consistent scores on repeated runs (no flaky tests).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-panel" id="phase-2">
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-num">Phase 2 <span class="phase-tag tag-auto">Runs Automatically</span></div>
+          <div class="phase-name">Skill Improvement Loop — The Autoresearch Engine</div>
+          <div class="phase-tagline">Every night: propose a skill edit → test it → promote if better → report in morning briefing.</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-what">
+            <h4>What this means in plain English</h4>
+            <p>After you go to sleep, a sub-agent reads each skill file that has ≥5 test cases. It proposes a specific improvement, writes the edit to a staging file (never the live file), runs the eval harness against the staged version, and compares scores. If the new version passes all existing tests and scores higher, it's promoted automatically. You wake up to a changelog in your morning briefing. If you don't like a change, reply "revert heartbeat" or whatever skill — and it's undone.</p>
+          </div>
+          <ul class="step-list">
+            <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Nightly sub-agent run</strong> — max 10 sequential sessions, one per skill. Each session: read skill → propose edit → write to SKILL.staging.md → run eval → compare → promote or discard.</div></li>
+            <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Auto-promotion rule</strong> — staging version promotes automatically IF: (a) aggregate eval score strictly improves, AND (b) zero individual test case regressions. Otherwise discarded. Circuit breaker: 3 consecutive discards → skill paused, Mike alerted.</div></li>
+            <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Morning briefing changelog</strong> — every morning's briefing includes: skills improved, skills paused, new corrections captured, eval score trends. One section, 10 seconds to scan. Reply "revert [skill]" to undo anything.</div></li>
+          </ul>
+          <div class="gate-box">
+            <div class="gate-icon">📊</div>
+            <div class="gate-text"><strong>Validation gate:</strong> Track the first 10 auto-promotions. If you revert ≥3 of them, we switch to requiring your approval before promotion. If you revert 0–1, auto-promotion is validated and stays.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-panel" id="phase-3">
+      <div class="phase-card">
+        <div class="phase-card-header">
+          <div class="phase-num">Phase 3 <span class="phase-tag tag-human">Always Human-Gated</span></div>
+          <div class="phase-name">Behavioral Meta-Loop — Improving SOUL.md Itself</div>
+          <div class="phase-tagline">The loop surfaces proposals for changing ClawdMode's core personality rules. You approve or reject each one.</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-what">
+            <h4>What this means in plain English</h4>
+            <p>After Phase 2 is running and proven, the loop can start looking at patterns across all corrections and propose changes to the meta-instructions — SOUL.md, HEARTBEAT.md, morning briefing prompt. These are higher-stakes changes because they affect ALL behavior, not just one skill. They are ALWAYS presented to you as proposals. ClawdMode cannot change SOUL.md without your explicit "approve" reply. Ever.</p>
+          </div>
+          <ul class="step-list">
+            <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Prompt improvements (morning briefing, HEARTBEAT.md)</strong> — staged, presented in morning briefing as proposals. You say "approve" or ignore. Never auto-promoted.</div></li>
+            <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>SOUL.md proposals</strong> — if 8+ corrections point to the same behavioral pattern (e.g., "you're too verbose"), ClawdMode surfaces a specific proposed rule change: "Suggest adding: responses under 150 words unless Mike explicitly requests detail." You approve or reject explicitly.</div></li>
+            <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Quarterly review</strong> — you and ClawdMode review the full correction corpus, improvement history, and skill trends. Decide whether to expand scope, tighten gates, or adjust circuit breaker thresholds.</div></li>
+          </ul>
+          <div class="gate-box">
+            <div class="gate-icon">🔑</div>
+            <div class="gate-text"><strong>Hard rule:</strong> SOUL.md, AGENTS.md, and IDENTITY.md can never be autonomously modified. They are always human-approved. This never changes regardless of how well Phase 2 performs.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE 3 DECISIONS THE COUNCIL MADE -->
+  <section>
+    <div class="section-label">How the Council Voted</div>
+    <div class="section-title">3 key disagreements. All resolved.</div>
+    <div class="section-sub">Opus and Codex debated these head-to-head. Here's how they landed.</div>
+
+    <div class="decision-list">
+      <div class="decision-item" onclick="toggleDecision(this)">
+        <div class="decision-header">
+          <div class="decision-q">Can we start the improvement loop before building a test harness?</div>
+          <div class="decision-winner winner-codex">Codex wins</div>
+        </div>
+        <div class="decision-body">
+          <div class="versus">
+            <div class="versus-side opus"><div class="versus-label">Opus said</div>Start now using passive signals — if you don't correct it, it was probably fine. Don't block on building an eval harness first.</div>
+            <div class="versus-side codex"><div class="versus-label">Codex said</div>Passive silence is dangerous for an EA agent. "Mike didn't reply" could mean nothing was wrong, OR that ClawdMode missed something Mike didn't catch either. Optimizing for silence teaches the system to be less incisive.</div>
+          </div>
+          <div class="verdict-box"><strong>Verdict:</strong> Codex wins — with Opus's pragmatism on harness size. The loop must have a test harness, but it only needs 5 labeled test cases per skill (drawn from correction mining), not 50. Five cases is enough to catch directional regressions without blocking for months.</div>
+        </div>
+      </div>
+
+      <div class="decision-item" onclick="toggleDecision(this)">
+        <div class="decision-header">
+          <div class="decision-q">Mine corrections first, then build harness — or do both in parallel?</div>
+          <div class="decision-winner winner-tie">Both conceded</div>
+        </div>
+        <div class="decision-body">
+          <div class="versus">
+            <div class="versus-side opus"><div class="versus-label">Opus said</div>Mine corrections first. Understand the taxonomy before building infrastructure for it.</div>
+            <div class="versus-side codex"><div class="versus-label">Codex said</div>Run in parallel. Define the harness JSON schema first as the shared contract, then mine corrections directly into that format.</div>
+          </div>
+          <div class="verdict-box"><strong>Verdict:</strong> Parallel — define the schema first (10-minute task), then mine corrections and build the eval runner simultaneously. The schema is the shared contract. Zero delay, zero quality tradeoff. Both councils conceded this.</div>
+        </div>
+      </div>
+
+      <div class="decision-item" onclick="toggleDecision(this)">
+        <div class="decision-header">
+          <div class="decision-q">Do skill improvements auto-promote, or does Mike review each one?</div>
+          <div class="decision-winner winner-tie">Tiered verdict</div>
+        </div>
+        <div class="decision-body">
+          <div class="versus">
+            <div class="versus-side opus"><div class="versus-label">Opus said</div>Auto-promote if eval score improves. Mike gets a changelog and can revert, but doesn't need to approve each change.</div>
+            <div class="versus-side codex"><div class="versus-label">Codex said</div>Human review before promotion — implied but not fully specified.</div>
+          </div>
+          <div class="verdict-box"><strong>Verdict (tiered by file type):</strong><br>
+          • <strong>Skill files (SKILL.md):</strong> Auto-promote if score strictly improves. Mike gets changelog + revert option.<br>
+          • <strong>Cron prompts (morning briefing, HEARTBEAT):</strong> Human-gated. Higher blast radius — bad prompt wastes every day.<br>
+          • <strong>SOUL.md / AGENTS.md:</strong> Always human-approved. Never autonomous.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S AUTOMATED VS. WHAT'S YOURS -->
+  <section>
+    <div class="section-label">Control Map</div>
+    <div class="section-title">What runs itself vs. what you control</div>
+    <div class="control-grid">
+      <div class="control-card auto">
+        <div class="control-label">Automated (ClawdMode does this)</div>
+        <ul>
+          <li>Mine corrections from memory files</li>
+          <li>Generate test cases from corrections</li>
+          <li>Run nightly skill improvement sessions</li>
+          <li>Auto-promote skill files that pass eval</li>
+          <li>Circuit-break on 3 consecutive failures</li>
+          <li>Deliver morning changelog to you</li>
+          <li>Capture new corrections going forward</li>
+        </ul>
+      </div>
+      <div class="control-card human">
+        <div class="control-label">Always yours (Mike approves)</div>
+        <ul>
+          <li>SOUL.md changes — ever, forever</li>
+          <li>AGENTS.md changes — ever, forever</li>
+          <li>Cron prompt improvements (morning briefing, HEARTBEAT)</li>
+          <li>Revert any skill promotion (just reply "revert [skill]")</li>
+          <li>Pause/resume any skill's loop</li>
+          <li>Quarterly review of loop effectiveness</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- YOUR ACTIONS -->
+  <section>
+    <div class="section-label">Your Role</div>
+    <div class="section-title">What you need to do</div>
+
+    <div class="action-list">
+      <div class="action-item you">
+        <div class="action-icon">✅</div>
+        <div>
+          <div class="action-who">Mike — say yes to this</div>
+          <div class="action-title">Give ClawdMode the go-ahead to start Phase 0 + Phase 1</div>
+          <div class="action-desc">That's all the trigger that's needed. ClawdMode fixes the 401 errors, mines the correction corpus, and builds the eval harness. You don't need to do anything technical.</div>
+        </div>
+      </div>
+      <div class="action-item you">
+        <div class="action-icon">📋</div>
+        <div>
+          <div class="action-who">Mike — scan daily (30 seconds)</div>
+          <div class="action-title">Read the morning changelog once Phase 2 starts</div>
+          <div class="action-desc">The morning briefing will include a section: "Overnight improvements: X skills updated, Y discarded, Z paused." Reply "revert [skill]" if anything looks wrong. That's your full ongoing commitment.</div>
+        </div>
+      </div>
+      <div class="action-item clawdmode">
+        <div class="action-icon">⚡</div>
+        <div>
+          <div class="action-who">ClawdMode — builds everything</div>
+          <div class="action-title">Phases 0 through 3 — all of it</div>
+          <div class="action-desc">Fix reliability, mine corrections, build eval harness, wire capture infrastructure, run nightly loop, generate changelogs. You review proposals for prompts and behavioral files. You hold the production gate on identity files. Everything else is automated.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT SUCCESS LOOKS LIKE -->
+  <section>
+    <div class="section-label">What Success Looks Like</div>
+    <div class="section-title">How we know it's working</div>
+
+    <div class="metric-grid">
+      <div class="metric-item">
+        <div class="metric-label">Target correction reduction</div>
+        <div class="metric-value">50%</div>
+        <div class="metric-sub">per skill after 3 improvement cycles</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Min test cases to enter loop</div>
+        <div class="metric-value">5</div>
+        <div class="metric-sub">labeled cases per skill from corrections</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Nightly cost</div>
+        <div class="metric-value">$0.20</div>
+        <div class="metric-sub">10 Sonnet iterations at ~$0.02/call</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Circuit breaker</div>
+        <div class="metric-value">3</div>
+        <div class="metric-sub">consecutive regressions → pause + alert</div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <div class="warning-title">⚠️ Goodhart's Law — same risk as the TMS platform</div>
+      <p>If the only metric is "eval score goes up," the system can optimize for passing tests while real-world quality stays flat or drops. The early warning signal: your explicit correction rate stays flat or increases despite improving eval scores, OR you start reverting auto-promoted changes. If that happens: pause all loops, rebuild test cases from fresh corrections, and treat the system as a suggestion engine (not autonomous) until calibrated.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">Questions</div>
+    <div class="section-title">Things you might be wondering</div>
+
+    <details>
+      <summary>How is this different from you just updating MEMORY.md when I correct you?</summary>
+      <div class="details-body">Right now, corrections go into MEMORY.md manually and informally. They often get lost or stale. This system: (1) captures every correction in a structured format, (2) converts corrections into repeatable tests, (3) uses those tests to propose and validate specific edits to skill files, and (4) measures whether the edit actually prevents the correction from happening again. MEMORY.md notes don't get tested. This does.</div>
+    </details>
+
+    <details>
+      <summary>What happens if the improvement loop makes ClawdMode worse?</summary>
+      <div class="details-body">Three safeguards: (1) Staging paths — changes never go to live files without passing the eval harness first. (2) Circuit breaker — 3 consecutive regressions and the skill's loop pauses automatically. (3) Revert — reply "revert [skill]" in the morning briefing and the promotion is undone. The worst case is one morning of slightly worse output for one skill, then an automatic rollback.</div>
+    </details>
+
+    <details>
+      <summary>Can this change who ClawdMode is? Tone, personality, how it talks to me?</summary>
+      <div class="details-body">Not autonomously. SOUL.md and AGENTS.md are hard-locked — the loop can never touch them without your explicit approval. The loop only works on individual skill files (heartbeat, weather, github, etc.) and cron prompts (with your approval). Core personality, communication style, and behavioral rules are yours to control.</div>
+    </details>
+
+    <details>
+      <summary>Does the same system work for Clawdia (Dane's AI)?</summary>
+      <div class="details-body">Not yet — and deliberately so. The council ruled that multi-agent portability is post-proof. We build and validate the loop for ClawdMode first. Once it's demonstrably working (correction rate down, stable eval scores, low revert rate), the pattern generalizes to Clawdia. Trying to build for both agents from day one adds complexity before we know if the approach works.</div>
+    </details>
+
+    <details>
+      <summary>Why does Phase 0 matter? Can't we just start improving skills?</summary>
+      <div class="details-body">If Morning Briefing is failing with 401 errors, running an improvement loop on the morning briefing skill produces confounded results — we can't tell if a proposed change improved things or if the cron job just happened to succeed that night. Garbage baseline = garbage eval = garbage improvements. Phase 0 is about getting clean signal before we try to learn from it.</div>
+    </details>
+  </section>
+
+</div>
+
+<div class="footer">
+  COE Final Verdict &nbsp;·&nbsp; <span>78/100 confidence</span> &nbsp;·&nbsp; Opus + Sonnet &nbsp;·&nbsp; March 8, 2026 &nbsp;·&nbsp; ClawdMode
+</div>
+
+<script>
+  function showPhase(n) {
+    document.querySelectorAll('.phase-tab').forEach((t,i) => t.classList.toggle('active', i===n));
+    document.querySelectorAll('.phase-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  }
+  function toggleDecision(el) { el.classList.toggle('open'); }
+</script>
+</body>
+</html>
