@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClawdMode Autoresearch — Session Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.65; font-size: 16px; }
+  a { color: #58a6ff; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #1e3a5f 0%, #0d2137 100%); padding: 48px 32px 40px; text-align: center; border-bottom: 3px solid #1f6feb; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #58a6ff; text-transform: uppercase; border: 1px solid #58a6ff; padding: 4px 10px; border-radius: 4px; margin-bottom: 16px; }
+  .header h1 { font-size: 2.4rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .header .subtitle { font-size: 1.1rem; color: #8b949e; margin-bottom: 12px; }
+  .header .date { font-size: 0.85rem; color: #58a6ff; font-weight: 600; }
+
+  /* CONTAINER */
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* SUMMARY */
+  .summary { background: #161b22; border: 1px solid #1f6feb; border-radius: 8px; padding: 20px 24px; margin: 32px 0; }
+  .summary p { font-size: 1.05rem; color: #c9d1d9; }
+
+  /* SECTIONS */
+  section { margin: 40px 0; border-top: 1px solid #21262d; padding-top: 28px; }
+  section:first-child { border-top: none; }
+  h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  h3 { font-size: 1.15rem; font-weight: 600; color: #c9d1d9; margin: 20px 0 12px; }
+  p { color: #c9d1d9; margin-bottom: 14px; font-size: 0.97rem; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { color: #c9d1d9; margin-bottom: 6px; font-size: 0.96rem; }
+  strong { color: #e6edf3; }
+  code { background: #161b22; border: 1px solid #30363d; border-radius: 4px; padding: 2px 6px; font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 0.85em; color: #79c0ff; }
+
+  /* CALLOUTS */
+  .callout { background: #0d2137; border-left: 4px solid #1f6feb; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; color: #c9d1d9; font-size: 0.95rem; }
+  .callout.warning { background: #1a1200; border-color: #d29922; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid #30363d; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #1e3a5f; color: #58a6ff; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 12px 16px; text-align: left; }
+  td { padding: 10px 16px; font-size: 0.93rem; color: #c9d1d9; border-top: 1px solid #21262d; }
+  tr:nth-child(even) td { background: #0d1117; }
+  tr:nth-child(odd) td { background: #111620; }
+
+  /* NEXT STEPS */
+  .next-steps { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 24px 28px; margin: 40px 0 0; }
+  .next-steps h3 { color: #58a6ff; margin-bottom: 16px; font-size: 1.1rem; border: none; }
+  .next-steps ul { list-style: none; padding: 0; }
+  .next-steps li { padding: 8px 0; border-bottom: 1px solid #21262d; font-size: 0.95rem; color: #c9d1d9; }
+  .next-steps li:last-child { border-bottom: none; }
+  .ns-owner { font-weight: 700; color: #e6edf3; margin-right: 8px; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 32px; color: #484f58; font-size: 0.8rem; border-top: 1px solid #21262d; margin-top: 48px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="badge">INTERNAL</div>
+  <h1>ClawdMode Autoresearch — Session Summary</h1>
+  <div class="subtitle">What we built tonight and what runs from here</div>
+  <div class="date">March 7, 2026</div>
+</div>
+<div class="container">
+  <div class="summary"><p>Six phases of autonomous self-improvement built and live in one session. ClawdMode now corrects its own behavior from Mike's feedback, improves skill files nightly, captures positive signals, detects recurring failures, generates its own test cases, and synthesizes cross-skill behavioral rules — all without human intervention.</p></div>
+  <section><h2>What's Running</h2>
+<div class="table-wrap"><table><thead><tr><th>Job</th><th>When</th><th>What it does</th></tr></thead><tbody><tr><td>Nightly Skill Loop</td><td>5 AM PT daily</td><td>Proposes + tests improvements, promotes if score rises</td></tr>
+<tr><td>Synthetic Tests</td><td>5 AM PT daily</td><td>Auto-generates adversarial test cases from skill edge cases</td></tr>
+<tr><td>Outcome Scoring</td><td>5 AM PT daily</td><td>Composite score: eval (60%) + positive signals (25%) + no-reask (15%)</td></tr>
+<tr><td>Cross-Skill Eval</td><td>5 AM PT daily</td><td>Tests universal rules across all skills simultaneously</td></tr>
+<tr><td>Corrections → Tests</td><td>Mon 4 AM PT</td><td>Converts Mike's corrections into eval test cases</td></tr>
+<tr><td>Cross-Skill Refresh</td><td>Mon 4 AM PT</td><td>Re-detects patterns, regenerates CORE-RULES.md, injects into skills</td></tr>
+<tr><td>Intelligence Report</td><td>Mon 8:30 AM PT</td><td>HTML dashboard: scores, trends, signals, proposals</td></tr>
+<tr><td>SOUL.md Proposal</td><td>Wed 8 AM PT</td><td>Proposes one behavioral edit — Mike replies approve/reject</td></tr>
+<tr><td>Auth Keepalive</td><td>Every 3h</td><td>Prevents Anthropic OAuth token expiration</td></tr></tbody></table></div>
+</section>
+<section><h2>Skill Scores (Day 0 Baselines)</h2>
+<div class="table-wrap"><table><thead><tr><th>Skill</th><th>Eval Score</th><th>Composite</th><th>Status</th></tr></thead><tbody><tr><td>heartbeat</td><td>100/100</td><td>75</td><td>✅ Manually patched this session</td></tr>
+<tr><td>monday</td><td>50/100</td><td>45</td><td>⚠️ Nightly loop targeting</td></tr>
+<tr><td>pdf-report</td><td>40/100</td><td>39</td><td>⚠️ Nightly loop targeting</td></tr>
+<tr><td>timestamps</td><td>38/100</td><td>38</td><td>⚠️ Nightly loop targeting</td></tr>
+<tr><td>html-report</td><td>33/100</td><td>35</td><td>⚠️ Nightly loop targeting</td></tr>
+<tr><td>xskill (cross)</td><td>71/100</td><td>—</td><td>🔴 PT timestamps + stats suppress failing</td></tr></tbody></table></div>
+</section>
+<section><h2>The Six Phases</h2>
+<h3>Phase 0 — Reliability</h3>
+<ul><li>Anthropic OAuth keepalive cron (every 3h)</li><li>GPT-5.4 fallback model added</li><li>Consecutive error counts cleared on all cron jobs</li></ul>
+<h3>Phase 1 — Correction Mining</h3>
+<ul><li>27 corrections extracted from 18 daily memory files</li><li>Eval harnesses built for 6 skills (7–11 test cases each)</li><li>Correction capture wire: auto-detects Mike's feedback in every message</li></ul>
+<h3>Phase 2 — Nightly Improvement Loop</h3>
+<ul><li>propose → stage → eval → promote or discard</li><li>Circuit breaker at 3 consecutive regressions per skill</li><li>SOUL.md weekly proposal (human-gated, Wednesday 8 AM PT)</li></ul>
+<h3>Phase 3 — Intelligence Layer</h3>
+<ul><li>Score ledger: every eval run persisted with timestamp</li><li>Recurring failure detector: flags corrections that recur after a fix</li><li>Weekly HTML intelligence report: auto-deployed to GitHub Pages</li></ul>
+<h3>Phase 4 — Positive Signals</h3>
+<ul><li>Positive capture: detects 'perfect', 'exactly right', 'keep doing that'</li><li>Re-ask rate tracker: 7-day fix windows — did the improvement actually hold?</li><li>Composite outcome score: eval + positive rate + no-reask rate</li></ul>
+<h3>Phase 5 — Synthetic Tests</h3>
+<ul><li>Auto-generates 2–4 adversarial test cases per skill from edge cases</li><li>No Mike corrections needed — system self-expands test coverage</li><li>24 synthetic cases generated Day 0 across all 6 skills</li></ul>
+<h3>Phase 6 — Cross-Skill Synthesis</h3>
+<ul><li>9 behavioral rules found spanning multiple skills</li><li>CORE-RULES.md: universal foundation loaded every session</li><li>Rules injected into meeting-prep, inbox-operator, pdf-report skill files</li><li>Cross-skill eval: tests HIGH-severity rules across all skills at once</li></ul>
+</section>
+<section><h2>Key Guardrails</h2>
+<div class="callout">SOUL.md and AGENTS.md are always human-gated. The loop can improve skill files autonomously, but behavioral personality changes require Mike's explicit approval.</div>
+<ul><li>Circuit breaker: 3 consecutive regressions pause the loop for that skill</li><li>Promotion only when eval score strictly improves — no ties</li><li>First 10 auto-promotions monitored: if Mike reverts 3+, switch all to human-gated</li><li>SOUL proposals expire after 7 days if not answered</li><li>Max 10 skill iterations per night ($0.20/night target)</li></ul>
+</section>
+  <div class="next-steps"><h3>Next Steps</h3><ul><li><span class="ns-owner">🦞 ClawdMode</span> Tonight's nightly loop — first full 6-phase run</li>
+<li><span class="ns-owner">🦞 ClawdMode</span> Monday 8:30 AM PT — intelligence report with first delta scores</li>
+<li><span class="ns-owner">🦞 ClawdMode</span> Wednesday 8 AM PT — first SOUL.md proposal to Mike</li>
+<li><span class="ns-owner">🙋 Mike</span> Reply approve/reject to Wednesday SOUL proposal</li>
+<li><span class="ns-owner">🙋 Mike</span> Review TMS event log schema when ready to unblock Clawdia</li></ul></div>
+</div>
+<footer>Generated by ClawdMode &mdash; March 7, 2026</footer>
+</body>
+</html>
