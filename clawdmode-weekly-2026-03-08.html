@@ -69,6 +69,14 @@
     </div>
     <div class="stat">
       <div class="stat-val" style="color:#3fb950">0</div>
+      <div class="stat-label">Positive Signals</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:#3fb950">0</div>
+      <div class="stat-label">Fix Regressions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:#3fb950">0</div>
       <div class="stat-label">Recurring Failures</div>
     </div>
   </div>
@@ -79,35 +87,40 @@
     <p>All production scores with this-week delta. Sorted worst-first. Loop targets anything below 70/100.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Skill</th><th>Score</th><th>Week Δ</th><th>Trend (last 8)</th></tr></thead>
+        <thead><tr><th>Skill</th><th>Eval Score</th><th>Week Δ</th><th>⬡ Composite</th><th>Trend</th></tr></thead>
         <tbody><tr>
       <td>⚠️ <strong style="color:#e6edf3">html-report</strong></td>
       <td><span style="color:#f85149;font-weight:700;font-size:1.1rem">33</span>/100</td>
       <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:33 Positive:0 No-reask:100">⬡ 35</span></td>
       <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="33/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:13px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
     </tr>
 <tr>
       <td>⚠️ <strong style="color:#e6edf3">timestamps</strong></td>
       <td><span style="color:#f85149;font-weight:700;font-size:1.1rem">38</span>/100</td>
       <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:38 Positive:0 No-reask:100">⬡ 38</span></td>
       <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="38/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:15px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
     </tr>
 <tr>
       <td>⚠️ <strong style="color:#e6edf3">pdf-report</strong></td>
       <td><span style="color:#f85149;font-weight:700;font-size:1.1rem">40</span>/100</td>
       <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:40 Positive:0 No-reask:100">⬡ 39</span></td>
       <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="40/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:16px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
     </tr>
 <tr>
       <td> <strong style="color:#e6edf3">monday</strong></td>
       <td><span style="color:#d29922;font-weight:700;font-size:1.1rem">50</span>/100</td>
       <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:50 Positive:0 No-reask:100">⬡ 45</span></td>
       <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="50/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:20px;background:#d29922;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
     </tr>
 <tr>
       <td>✅ <strong style="color:#e6edf3">heartbeat</strong></td>
       <td><span style="color:#3fb950;font-weight:700;font-size:1.1rem">100</span>/100</td>
       <td><span style="color:#3fb950">+73</span></td>
+      <td><span style="color:#58a6ff;font-size:0.85rem" title="Eval:100 Positive:0 No-reask:100">⬡ 75</span></td>
       <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="27/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:11px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span><span title="100/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:40px;background:#3fb950;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
     </tr></tbody>
       </table>
@@ -147,6 +160,14 @@
     <h2>📥 Correction Inbox</h2>
     <p><strong>29</strong> total corrections in corpus. <strong>1</strong> new this week. Converts to test cases every Monday 4 AM PT.</p>
     <ul><li>"HTML reports instead of PDF — that's my need going forwards. Proceed...."</li></ul>
+  </section>
+
+  <!-- PHASE 4: SIGNAL BALANCE -->
+  <section>
+    <h2>📡 Signal Balance (Phase 4)</h2>
+    <p>Real-world feedback loop. <strong>1</strong> correction(s) and <strong>0</strong> positive signal(s) this week. Composite score = Eval (60%) + Positive rate (25%) + No-reask rate (15%).</p>
+    <div class="callout">✅ No fix regressions this week — improvements are holding in real conversations.</div>
+    <p style="color:#484f58">No positive signals captured yet — system is learning what 'perfect' looks like for Mike.</p>
   </section>
 
   <!-- NEXT FOCUS -->
