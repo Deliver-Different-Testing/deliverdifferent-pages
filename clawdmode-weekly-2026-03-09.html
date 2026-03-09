@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClawdMode Weekly Intelligence Report</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.65; font-size: 15px; }
+
+  .header { background: linear-gradient(135deg, #1e3a5f 0%, #0d2137 100%); padding: 48px 32px 40px; text-align: center; border-bottom: 3px solid #1f6feb; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #58a6ff; text-transform: uppercase; border: 1px solid #58a6ff; padding: 4px 10px; border-radius: 4px; margin-bottom: 16px; }
+  .header h1 { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .header .sub { color: #8b949e; font-size: 0.95rem; margin-bottom: 6px; }
+  .header .date { font-size: 0.85rem; color: #58a6ff; font-weight: 600; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 32px 0; }
+  .stat { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px 16px; text-align: center; }
+  .stat-val { font-size: 2rem; font-weight: 800; color: #fff; }
+  .stat-label { font-size: 0.75rem; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+  section { margin: 40px 0; border-top: 1px solid #21262d; padding-top: 28px; }
+  section:first-of-type { border-top: none; }
+  h2 { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  h3 { font-size: 1.05rem; font-weight: 600; color: #c9d1d9; margin: 20px 0 10px; }
+  p { color: #c9d1d9; margin-bottom: 12px; font-size: 0.95rem; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { color: #c9d1d9; margin-bottom: 8px; font-size: 0.93rem; }
+  strong { color: #e6edf3; }
+
+  .callout { background: #0d2137; border-left: 4px solid #1f6feb; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; color: #c9d1d9; font-size: 0.93rem; }
+  .callout.warning { background: #1a1200; border-color: #d29922; }
+  .callout.danger { background: #1c0a0a; border-color: #f85149; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid #30363d; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #1e3a5f; color: #58a6ff; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; text-align: left; }
+  td { padding: 12px 14px; font-size: 0.92rem; color: #c9d1d9; border-top: 1px solid #21262d; }
+  tr:nth-child(even) td { background: #0d1117; }
+  tr:nth-child(odd) td { background: #111620; }
+
+  footer { text-align: center; padding: 32px; color: #484f58; font-size: 0.8rem; border-top: 1px solid #21262d; margin-top: 48px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="badge">⚡ Weekly Intelligence Report</div>
+  <h1>ClawdMode Self-Assessment</h1>
+  <div class="sub">Autonomous skill improvement &amp; behavioral health</div>
+  <div class="date">Monday, March 9, 2026</div>
+</div>
+<div class="container">
+
+  <!-- STATS GRID -->
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="stat-val">7</div>
+      <div class="stat-label">Skills Tracked</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:#3fb950">3</div>
+      <div class="stat-label">Improvements This Week</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:#d29922">1</div>
+      <div class="stat-label">New Corrections</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:#3fb950">0</div>
+      <div class="stat-label">Positive Signals</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:#3fb950">0</div>
+      <div class="stat-label">Fix Regressions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:#3fb950">0</div>
+      <div class="stat-label">Recurring Failures</div>
+    </div>
+  </div>
+
+  <!-- SKILL SCORES -->
+  <section>
+    <h2>📊 Skill Scores</h2>
+    <p>All production scores with this-week delta. Sorted worst-first. Loop targets anything below 70/100.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Skill</th><th>Eval Score</th><th>Week Δ</th><th>⬡ Composite</th><th>Trend</th></tr></thead>
+        <tbody><tr>
+      <td>⚠️ <strong style="color:#e6edf3">html-report</strong></td>
+      <td><span style="color:#f85149;font-weight:700;font-size:1.1rem">33</span>/100</td>
+      <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:33 Positive:0 No-reask:100">⬡ 35</span></td>
+      <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="33/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:13px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
+    </tr>
+<tr>
+      <td>⚠️ <strong style="color:#e6edf3">timestamps</strong></td>
+      <td><span style="color:#f85149;font-weight:700;font-size:1.1rem">38</span>/100</td>
+      <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:38 Positive:0 No-reask:100">⬡ 38</span></td>
+      <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="38/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:15px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
+    </tr>
+<tr>
+      <td>⚠️ <strong style="color:#e6edf3">pdf-report</strong></td>
+      <td><span style="color:#f85149;font-weight:700;font-size:1.1rem">40</span>/100</td>
+      <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:40 Positive:0 No-reask:100">⬡ 39</span></td>
+      <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="40/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:16px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
+    </tr>
+<tr>
+      <td> <strong style="color:#e6edf3">monday</strong></td>
+      <td><span style="color:#d29922;font-weight:700;font-size:1.1rem">50</span>/100</td>
+      <td><span style="color:#484f58">—</span></td>
+      <td><span style="color:#f85149;font-size:0.85rem" title="Eval:50 Positive:0 No-reask:100">⬡ 45</span></td>
+      <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="50/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:20px;background:#d29922;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
+    </tr>
+<tr>
+      <td> <strong style="color:#e6edf3">xskill</strong></td>
+      <td><span style="color:#d29922;font-weight:700;font-size:1.1rem">50</span>/100</td>
+      <td><span style="color:#f85149">-21</span></td>
+      <td></td>
+      <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="71/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:28px;background:#58a6ff;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span><span title="40/100 on Mar 9, 2026" style="display:inline-block;width:10px;height:16px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span><span title="50/100 on Mar 9, 2026" style="display:inline-block;width:10px;height:20px;background:#d29922;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
+    </tr>
+<tr>
+      <td> <strong style="color:#e6edf3">mcp</strong></td>
+      <td><span style="color:#d29922;font-weight:700;font-size:1.1rem">67</span>/100</td>
+      <td><span style="color:#484f58">—</span></td>
+      <td></td>
+      <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="67/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:27px;background:#d29922;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span><span title="67/100 on Mar 9, 2026" style="display:inline-block;width:10px;height:27px;background:#d29922;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
+    </tr>
+<tr>
+      <td>✅ <strong style="color:#e6edf3">heartbeat</strong><span style="background:#5d1f1a;color:#f85149;padding:2px 6px;border-radius:4px;font-size:11px;margin-left:6px">2/3</span></td>
+      <td><span style="color:#3fb950;font-weight:700;font-size:1.1rem">100</span>/100</td>
+      <td><span style="color:#3fb950">+73</span></td>
+      <td><span style="color:#58a6ff;font-size:0.85rem" title="Eval:100 Positive:0 No-reask:100">⬡ 75</span></td>
+      <td><div style="display:flex;align-items:flex-end;height:40px;gap:1px"><span title="27/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:11px;background:#f85149;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span><span title="100/100 on Mar 7, 2026" style="display:inline-block;width:10px;height:40px;background:#3fb950;margin-right:2px;border-radius:2px 2px 0 0;vertical-align:bottom"></span></div></td>
+    </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- WEEKLY ACTIVITY -->
+  <section>
+    <h2>🔧 This Week's Activity</h2>
+    <h3>Promotions (3)</h3>
+    <ul><li><strong style="color:#3fb950">✅ soul</strong>: 0 → 24 (+24)</li>
+<li><strong style="color:#3fb950">✅ soul</strong>: 0 → 25 (+25)</li>
+<li><strong style="color:#3fb950">✅ heartbeat</strong>: Manual fix — Added: outside-schedule immediate HEARTBEAT_OK, forbidden reactions in cron, Verification Rule (sent</li></ul>
+    <h3>Discarded Attempts (5)</h3>
+    <ul><li><span style="color:#8b949e">heartbeat</span>: staging (null) did not beat production (100). Circuit: 2/3</li>
+<li><span style="color:#8b949e">heartbeat</span>: staging (null) did not beat production (100). Circuit: 1/3</li>
+<li><span style="color:#8b949e">heartbeat</span>: staging (null) did not beat production (27). Circuit: 1/3</li>
+<li><span style="color:#8b949e">heartbeat</span>: staging (null) did not beat production (36). Circuit: 1/3</li>
+<li><span style="color:#8b949e">heartbeat</span>: staging (36) did not beat production (36). Circuit: 1/3</li></ul>
+  </section>
+
+  <!-- RECURRING FAILURES -->
+  <section>
+    <h2>🔁 Recurring Failure Patterns</h2>
+    <p>Corrections that appear multiple times — indicates a fix that didn't hold, or a gap not yet addressed.</p>
+    
+    <ul><li>• <strong style="color:#d29922">[LOW]</strong> <em>SOUL.md</em> — 2x: "HTML reports instead of PDF that's my need going forwards..."</li>
+<li>• <strong style="color:#d29922">[LOW]</strong> <em>MEMORY.md</em> — 2x: "Always show timestamps in PT, never UTC or London time..."</li></ul>
+  </section>
+
+  <!-- SOUL PROPOSAL STATUS -->
+  <section>
+    <h2>⚡ SOUL.md Proposal Status</h2>
+    <p>Human-gated behavioral proposals. Reply <strong>approve</strong> or <strong>reject</strong> in Telegram.</p>
+    <p style="color:#484f58">No proposals generated yet.</p>
+    <p style="color:#484f58;font-size:0.85rem">History: 0 proposal(s) total — 0 approved, 0 rejected, 0 expired</p>
+  </section>
+
+  <!-- CORRECTION INBOX -->
+  <section>
+    <h2>📥 Correction Inbox</h2>
+    <p><strong>29</strong> total corrections in corpus. <strong>1</strong> new this week. Converts to test cases every Monday 4 AM PT.</p>
+    <ul><li>"HTML reports instead of PDF — that's my need going forwards. Proceed...."</li></ul>
+  </section>
+
+  <!-- PHASE 4: SIGNAL BALANCE -->
+  <section>
+    <h2>📡 Signal Balance (Phase 4)</h2>
+    <p>Real-world feedback loop. <strong>1</strong> correction(s) and <strong>0</strong> positive signal(s) this week. Composite score = Eval (60%) + Positive rate (25%) + No-reask rate (15%).</p>
+    <div class="callout">✅ No fix regressions this week — improvements are holding in real conversations.</div>
+    <p style="color:#484f58">No positive signals captured yet — system is learning what 'perfect' looks like for Mike.</p>
+  </section>
+
+  <!-- NEXT FOCUS -->
+  <section>
+    <h2>🎯 Next Focus Areas</h2>
+    <p>Skills the nightly loop will prioritize based on lowest scores and highest correction volume.</p>
+    <ul><li><strong>html-report</strong>: 33/100 — needs improvement</li>
+<li><strong>timestamps</strong>: 38/100 — needs improvement</li>
+<li><strong>pdf-report</strong>: 40/100 — needs improvement</li></ul>
+  </section>
+
+</div>
+<footer>ClawdMode Autoresearch &mdash; Phase 3 &mdash; Monday, March 9, 2026</footer>
+</body>
+</html>
