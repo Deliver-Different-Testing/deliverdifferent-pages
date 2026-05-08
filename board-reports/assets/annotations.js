@@ -5,7 +5,7 @@ const API = 'https://board-report-api-production.up.railway.app';
   'use strict';
 
   const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const REPORT_SLUG = pathParts.find(p => /\w+-\d{4}/.test(p));
+  const REPORT_SLUG = pathParts.find(p => /\w+-\d{4}/.test(p) || /^fy\d{2}-[a-z0-9-]+$/i.test(p));
   if (!REPORT_SLUG) return;
 
   let MODE = 'view'; // 'view' | 'review' | 'premeeting' | 'meeting'
