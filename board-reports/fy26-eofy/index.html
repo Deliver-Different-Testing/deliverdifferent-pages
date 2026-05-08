@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urgent Group Board Pack — FY26 EOFY</title>
+<style>
+  :root {
+    --navy: #000000;
+    --teal: #3bc7f4;
+    --orange: #fe811a;
+    --green: #1a9e3f;
+    --red: #d42b2b;
+    --light-bg: #f7f8fa;
+    --border: #d0d4db;
+    --text: #222;
+    --text-muted: #5a5f6b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text);
+    background: #fff;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+  .report-header {
+    background: var(--navy);
+    color: #fff;
+    padding: 36px 40px 28px;
+    margin: 0 -24px;
+    border-bottom: 4px solid var(--teal);
+  }
+  .report-header .brand { font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: var(--teal); margin-bottom: 6px; }
+  .report-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .report-header .subtitle { font-size: 15px; color: #b0b8c8; }
+  .report-header .meta { margin-top: 14px; font-size: 12px; color: #8891a3; display: flex; gap: 24px; flex-wrap: wrap; }
+  .toc {
+    background: var(--light-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--teal);
+    padding: 20px 28px;
+    margin: 28px 0;
+  }
+  .toc h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy); margin-bottom: 10px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 4px; }
+  .toc a { color: var(--navy); text-decoration: none; border-bottom: 1px dotted var(--teal); }
+  h2.section-title {
+    color: var(--navy);
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 3px solid var(--teal);
+    padding-bottom: 6px;
+    margin: 36px 0 16px;
+  }
+  h3 { color: var(--navy); font-size: 16px; margin: 24px 0 10px; }
+  p { margin-bottom: 10px; }
+  strong { color: var(--navy); }
+  .warning-box {
+    background: #fff8f0;
+    border: 1px solid var(--orange);
+    border-left: 5px solid var(--orange);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .warning-box .title { font-weight: 700; color: #c45a00; font-size: 15px; margin-bottom: 6px; }
+  .highlight-box {
+    background: #eaf7fd;
+    border-left: 4px solid var(--teal);
+    padding: 14px 18px;
+    margin: 14px 0;
+    border-radius: 2px;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
+  thead th {
+    background: var(--navy);
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  tbody td, tbody th { padding: 6px 10px; border-bottom: 1px solid #e2e5ea; }
+  tbody tr:nth-child(even) { background: #f7f8fa; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.bold-row td, tr.bold-row th { font-weight: 700; background: #edf0f5; }
+  tr.summary-row td, tr.summary-row th { font-weight: 700; border-top: 2px solid var(--navy); background: #e8ecf2; }
+  .var-pos { color: var(--green); font-weight: 600; }
+  .var-neg { color: var(--red); font-weight: 600; }
+  ul, ol { padding-left: 22px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+  .report-footer {
+    margin-top: 40px;
+    padding: 16px 0;
+    border-top: 2px solid var(--navy);
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .note-box {
+    background: #f6f6f6;
+    border: 1px solid #ddd;
+    border-left: 4px solid #999;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  @media (max-width: 768px) {
+    body { padding: 0 16px 48px; }
+    .report-header { margin: 0 -16px; padding: 28px 24px 22px; }
+    .report-header h1 { font-size: 24px; }
+  }
+  @media print {
+    .toc-fab, .ann-mode-bar, .ann-panel { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<header class="report-header">
+  <a href="../" style="display:inline-flex;align-items:center;gap:6px;color:#8891a3;text-decoration:none;font-size:13px;margin-bottom:12px;transition:color .2s;" onmouseover="this.style.color='#3bc7f4'" onmouseout="this.style.color='#8891a3'">← Back to Board Reports</a>
+  <div class="brand">Urgent Group</div>
+  <h1>Board Pack — FY26 End of Financial Year</h1>
+  <div class="subtitle">March 2026 month-end and FY26 year-end position</div>
+  <div class="meta">
+    <span>Prepared by Steve Bonnici, Managing Director</span>
+    <span>Draft financial base — 8 May 2026</span>
+    <span>Review-enabled Railway notes</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#important-notes">Important notes before board circulation</a></li>
+    <li><a href="#exec-summary">Executive Summary</a></li>
+    <li><a href="#financial-highlights">Financial Highlights — March 2026</a></li>
+    <li><a href="#fy26-summary">FY26 Year-End Financial Summary by Entity</a></li>
+    <li><a href="#finance-commentary">Finance Commentary Draft</a></li>
+    <li><a href="#operating-highlights">Operating Highlights</a></li>
+    <li><a href="#operational-challenges">Operational Challenges</a></li>
+    <li><a href="#hs">Health and Safety</a></li>
+    <li><a href="#balance-sheet">Balance Sheet Summary</a></li>
+    <li><a href="#forward-planning">Forward Planning</a></li>
+    <li><a href="#actions">Actions for the Board</a></li>
+    <li><a href="#cleanup">Final cleanup list before issuing</a></li>
+  </ol>
+</nav>
+
+<h2 class="section-title" id="important-notes">Important notes before board circulation</h2>
+<div class="warning-box">
+  <div class="title">Source workbook limitations still need cleanup before final issue</div>
+  <p>The visible balance sheet summary in the workbook is still dated <strong>31 Dec 2025</strong>, not 31 Mar 2026.</p>
+  <p><strong>DFRNT</strong> is split across NZ and US in the workbook, so the draft below uses the clearly visible NZ FY26 position and the March US snapshot separately.</p>
+  <p>This page is the <strong>financial backbone</strong> for the board pack and is intentionally ready for live comments, notes, and board review in the same way as the March report.</p>
+</div>
+
+<h2 class="section-title" id="exec-summary">1. Executive Summary</h2>
+<p><strong>Urgent Couriers</strong> finished FY26 strongly, with revenue and profit ahead of budget and a positive March result.</p>
+<p><strong>Urgent Cool</strong> remained materially behind budget through FY26 and reported a March loss, although March operating costs were controlled below budget.</p>
+<p><strong>DFRNT</strong> remained investment-heavy through FY26, with limited recognised revenue against a significant operating cost base.</p>
+<div class="highlight-box">
+  <strong>March month-end Group view:</strong> total income of <strong>$2.119m</strong> against budget of <strong>$2.182m</strong>, with NPBT of <strong>-$124.7k</strong> against budget of <strong>-$89.0k</strong>.
+</div>
+<p><strong>Strategic developments:</strong> [Steve to update]</p>
+<p><strong>Operating highlights:</strong> [Steve to update]</p>
+<p><strong>Operational challenges:</strong> [Steve to update]</p>
+
+<h2 class="section-title" id="financial-highlights">2. Financial Highlights — March 2026</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th class="num">Urgent Couriers</th>
+      <th class="num">Urgent Cool</th>
+      <th class="num">DFRNT</th>
+      <th class="num">Group Total</th>
+      <th class="num">Budget</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="bold-row"><th>Total Income</th><td class="num">$1,722,088</td><td class="num">$377,466</td><td class="num">$19,351</td><td class="num">$2,118,905</td><td class="num">$2,182,097</td></tr>
+    <tr><th>Net Fuel Surcharge</th><td class="num">$11,007</td><td class="num">$44,874</td><td class="num">-</td><td class="num">$55,881</td><td class="num">$65,973</td></tr>
+    <tr><th>Direct Costs</th><td class="num">$1,185,778</td><td class="num">$379,121</td><td class="num">$0</td><td class="num">$1,564,899</td><td class="num">$1,505,058</td></tr>
+    <tr class="summary-row"><th>GP</th><td class="num">$547,317</td><td class="num">$43,219</td><td class="num">$19,351</td><td class="num">$609,887</td><td class="num">$743,012</td></tr>
+    <tr><th>GP%</th><td class="num">31.6%</td><td class="num">10.2%</td><td class="num">100.0%</td><td class="num">28.0%</td><td class="num">33.1%</td></tr>
+    <tr><th>Total Opex</th><td class="num">$410,745</td><td class="num">$141,754</td><td class="num">$182,044</td><td class="num">$734,543</td><td class="num">$832,008</td></tr>
+    <tr class="summary-row"><th>EBITDA</th><td class="num">$172,317</td><td class="num">-$36,590</td><td class="num">-$161,455</td><td class="num">-$25,728</td><td class="num">$24,198</td></tr>
+    <tr class="summary-row"><th>NPBT</th><td class="num">$136,572</td><td class="num">-$98,535</td><td class="num">-$162,693</td><td class="num">-$124,656</td><td class="num">-$88,996</td></tr>
+  </tbody>
+</table>
+<p><strong>March observations:</strong> Urgent Couriers delivered a solid March with NPBT of <strong>$136.6k</strong>. Urgent Cool was weak with GP of only <strong>$43.2k</strong> and NPBT of <strong>-$98.5k</strong>. DFRNT contributed modest revenue but remained loss-making. Group GP% at <strong>28.0%</strong> was below the budgeted <strong>33.1%</strong>.</p>
+
+<h2 class="section-title" id="fy26-summary">3. FY26 Year-End Financial Summary by Entity</h2>
+<h3>3.1 Urgent Couriers — FY26</h3>
+<table>
+  <thead><tr><th>Metric</th><th class="num">FY26 Actual</th><th class="num">FY26 Budget</th><th class="num">Variance</th></tr></thead>
+  <tbody>
+    <tr><th>Trading Income</th><td class="num">$19,392,929</td><td class="num">$18,432,350</td><td class="num var-pos">$960,579</td></tr>
+    <tr><th>Other Income</th><td class="num">$1,306,988</td><td class="num">$673,522</td><td class="num var-pos">$633,466</td></tr>
+    <tr class="bold-row"><th>Total Income</th><td class="num">$20,699,917</td><td class="num">$19,105,872</td><td class="num var-pos">$1,594,045</td></tr>
+    <tr><th>Direct Costs</th><td class="num">$14,364,825</td><td class="num">$13,211,545</td><td class="num var-neg">$1,153,280</td></tr>
+    <tr class="summary-row"><th>GP</th><td class="num">$6,335,093</td><td class="num">$5,894,327</td><td class="num var-pos">$440,766</td></tr>
+    <tr><th>GP%</th><td class="num">30.6%</td><td class="num">30.9%</td><td class="num var-neg">-0.3 pts</td></tr>
+    <tr><th>Total Opex</th><td class="num">$5,505,113</td><td class="num">$5,480,928</td><td class="num var-neg">$24,185</td></tr>
+    <tr class="summary-row"><th>EBITDA</th><td class="num">$1,312,982</td><td class="num">$830,591</td><td class="num var-pos">$482,391</td></tr>
+    <tr class="summary-row"><th>NPBT</th><td class="num">$829,980</td><td class="num">$413,399</td><td class="num var-pos">$416,581</td></tr>
+  </tbody>
+</table>
+<p>Revenue finished <strong>$1.59m ahead of budget</strong>. Trading income alone was <strong>$960.6k ahead of budget</strong>. GP dollars finished ahead of budget, while GP% held broadly stable at <strong>30.6%</strong>. NPBT finished <strong>$416.6k ahead of budget</strong>.</p>
+
+<h3>3.2 Urgent Cool — FY26</h3>
+<table>
+  <thead><tr><th>Metric</th><th class="num">FY26 Actual</th><th class="num">FY26 Budget</th><th class="num">Variance</th></tr></thead>
+  <tbody>
+    <tr><th>Trading Income</th><td class="num">$4,487,471</td><td class="num">$5,574,685</td><td class="num var-neg">-$1,087,214</td></tr>
+    <tr><th>Other Income</th><td class="num">$491,673</td><td class="num">$613,216</td><td class="num var-neg">-$121,543</td></tr>
+    <tr class="bold-row"><th>Total Income</th><td class="num">$4,979,144</td><td class="num">$6,187,901</td><td class="num var-neg">-$1,208,757</td></tr>
+    <tr><th>Direct Costs</th><td class="num">$4,292,272</td><td class="num">$4,398,559</td><td class="num var-pos">-$106,287</td></tr>
+    <tr class="summary-row"><th>GP</th><td class="num">$686,872</td><td class="num">$1,789,342</td><td class="num var-neg">-$1,102,470</td></tr>
+    <tr><th>GP%</th><td class="num">13.8%</td><td class="num">28.9%</td><td class="num var-neg">-15.1 pts</td></tr>
+    <tr><th>Total Opex</th><td class="num">$1,810,660</td><td class="num">$2,054,338</td><td class="num var-pos">-$243,678</td></tr>
+    <tr class="summary-row"><th>EBITDA</th><td class="num">-$390,869</td><td class="num">$592,044</td><td class="num var-neg">-$982,913</td></tr>
+    <tr class="summary-row"><th>NPBT</th><td class="num">-$1,123,788</td><td class="num">-$264,996</td><td class="num var-neg">-$858,792</td></tr>
+  </tbody>
+</table>
+<p>Revenue finished <strong>$1.21m below budget</strong>. Direct cost control improved against budget, but weak revenue and poor gross profit conversion remained the core issue. FY26 GP% closed at <strong>13.8%</strong>. NPBT finished at <strong>-$1.124m</strong>.</p>
+
+<h3>3.3 DFRNT NZ — FY26</h3>
+<table>
+  <thead><tr><th>Metric</th><th class="num">FY26 Actual</th><th class="num">FY26 Budget</th><th class="num">Variance</th></tr></thead>
+  <tbody>
+    <tr><th>Trading Income</th><td class="num">$15,000</td><td class="num">$0</td><td class="num var-pos">$15,000</td></tr>
+    <tr><th>Direct Costs</th><td class="num">$0</td><td class="num">$0</td><td class="num">$0</td></tr>
+    <tr class="summary-row"><th>GP</th><td class="num">$15,000</td><td class="num">$0</td><td class="num var-pos">$15,000</td></tr>
+    <tr><th>GP%</th><td class="num">100.0%</td><td class="num">n/a</td><td class="num">n/a</td></tr>
+    <tr><th>Total Opex</th><td class="num">$1,858,224</td><td class="num">$2,111,982</td><td class="num var-pos">-$253,758</td></tr>
+    <tr class="summary-row"><th>EBITDA</th><td class="num">-$1,832,427</td><td class="num">-$2,045,861</td><td class="num var-pos">$213,434</td></tr>
+    <tr class="summary-row"><th>NPBT</th><td class="num">-$1,843,224</td><td class="num">-$2,111,982</td><td class="num var-pos">$268,758</td></tr>
+  </tbody>
+</table>
+<p>Revenue recognition remained minimal in FY26 versus the ongoing development and operating cost base. Spend finished below budget, but the entity remained significantly loss-making.</p>
+
+<h3>3.4 DFRNT US — March 2026 snapshot only</h3>
+<table>
+  <thead><tr><th>Metric</th><th class="num">March 2026</th></tr></thead>
+  <tbody>
+    <tr><th>Income</th><td class="num">$4,351</td></tr>
+    <tr><th>Total Operating Expenses</th><td class="num">$43,320</td></tr>
+    <tr class="summary-row"><th>Net Income</th><td class="num">-$38,969</td></tr>
+  </tbody>
+</table>
+<p>If DFRNT is to be presented as a fully consolidated annual position, the FY26 US YTD numbers should be pulled separately before final issue.</p>
+
+<h2 class="section-title" id="finance-commentary">4. Finance Commentary Draft</h2>
+<h3>Highlights</h3>
+<ul>
+  <li><strong>Urgent Couriers</strong> outperformed FY26 budget on both revenue and NPBT.</li>
+  <li>March delivered a positive month for <strong>Urgent Couriers</strong>, with NPBT of <strong>$136.6k</strong>.</li>
+  <li><strong>Urgent Cool</strong> held March operating expenses below budget, indicating some cost discipline despite the weak result.</li>
+  <li><strong>DFRNT NZ</strong> operating expenses closed below budget for FY26.</li>
+</ul>
+<h3>Lowlights</h3>
+<ul>
+  <li><strong>Urgent Cool</strong> finished FY26 materially behind budget on both revenue and profitability.</li>
+  <li><strong>Group March GP%</strong> finished below budget, driven by weaker conversion outside Urgent Couriers.</li>
+  <li><strong>DFRNT</strong> remains heavily investment-weighted, with operating losses continuing ahead of meaningful recurring revenue.</li>
+  <li>The balance sheet section in the workbook appears not to have been updated to March and needs refresh before board circulation.</li>
+</ul>
+<h3>Division commentary — starter draft</h3>
+<p><strong>Urgent Couriers:</strong> Strong FY26 trading year overall, with trading income ahead of budget by <strong>$960.6k</strong>. Other income also ran ahead of budget. Profitability remained solid despite March GP being slightly softer than ideal.</p>
+<p><strong>Urgent Cool:</strong> The business remained under pressure through FY26, primarily from revenue underperformance rather than uncontrolled overheads. March commentary in the workbook notes a negative EBITDA result impacted by the <strong>PMY522 engine failure</strong>, with an indication that EBITDA would otherwise have been positive.</p>
+<p><strong>DFRNT:</strong> DFRNT continued as a strategic investment line, with low current-period revenue and ongoing build costs. Any board discussion should clearly separate <strong>platform investment</strong>, <strong>commercial pipeline</strong>, and <strong>timing of revenue realisation</strong>.</p>
+
+<h2 class="section-title" id="operating-highlights">5. Operating Highlights</h2>
+<ul>
+  <li>Sales finished <strong>5% ahead of budget for the year</strong>, driven in part by winning <strong>LifeHealthcare</strong> business at approximately <strong>$80k/month</strong>.</li>
+  <li><strong>Woop</strong> received a <strong>7% price increase</strong> effective mid-April.</li>
+  <li>New business noted includes Chicken and Things (~$30k/month), Inex Metals (~$5k/month), Qantas Courier (~$5k–10k/month), and Toyota Manukau (~$10k/month).</li>
+  <li>Rotorua regular work from <strong>World Courier</strong> and <strong>Marken</strong> was noted as improving route economics.</li>
+  <li>P2P was described as consistent through the quarter, with dispatch and CS teams materially happier following ongoing system fixes.</li>
+  <li>After-hours top-ups were reported at only <strong>$1,127 for the three months</strong>.</li>
+  <li>Warehouse handover to <strong>Kiwicold, Wonky Box and Hyper Ride</strong> was completed during the quarter.</li>
+</ul>
+
+<h2 class="section-title" id="operational-challenges">6. Operational Challenges</h2>
+<ul>
+  <li><strong>JR</strong> remains a commercial risk pending contract certainty.</li>
+  <li>Home Delivery revenue continues to churn toward competitors, creating pressure on those services.</li>
+  <li><strong>Smartways</strong> is discounting aggressively, particularly around Zimmer.</li>
+  <li>Some regional runs, including <strong>Whakatane</strong> and <strong>Taupo</strong>, remain challenged for sustainable driver earnings.</li>
+  <li>DIFOT / late-call / courier sustainability reporting gaps continue to limit KPI visibility.</li>
+  <li>New warehouse tenant activity has increased traffic flow and H&amp;S complexity on site.</li>
+  <li>Urgent Cool faced significant service strain from road closures and an engine failure on <strong>PMY522</strong>.</li>
+</ul>
+
+<h2 class="section-title" id="hs">7. Health and Safety</h2>
+<p><strong>Urgent Couriers:</strong> the H&amp;S tab records <strong>1 high-risk</strong> and <strong>1 medium-risk</strong> incident in January 2026. <strong>No incidents were reported in February or March 2026</strong>, which the workbook flags as a reporting-discipline concern. Ongoing focus area remains the <strong>traffic management plan</strong> following the addition of new tenants.</p>
+<p><strong>Urgent Cool:</strong> no March incident count was clearly flagged in the visible summary. The visible sheet appears centred on <strong>February 2026 meeting content</strong> rather than a clean March board summary.</p>
+<div class="note-box">
+  <strong>Board note:</strong> this section should be cleaned up before final issue so the board gets a clear March / FY26 year-end H&amp;S position rather than mixed monthly artefacts.
+</div>
+
+<h2 class="section-title" id="balance-sheet">8. Balance Sheet Summary</h2>
+<p><strong>Source workbook issue:</strong> the visible balance sheet summary is dated <strong>31 Dec 2025</strong>, not 31 Mar 2026.</p>
+<table>
+  <thead><tr><th>Metric</th><th class="num">Visible workbook figure</th></tr></thead>
+  <tbody>
+    <tr><th>Total Current Assets</th><td class="num">$8,954,066</td></tr>
+    <tr><th>Total Fixed Assets</th><td class="num">$3,324,973</td></tr>
+    <tr><th>Total Non-current Assets</th><td class="num">$2,856,701</td></tr>
+    <tr><th>Total Assets</th><td class="num">$15,135,740</td></tr>
+    <tr><th>Total Current Liabilities</th><td class="num">$7,369,937</td></tr>
+    <tr><th>Total Non-current Liabilities</th><td class="num">$5,774,320</td></tr>
+    <tr><th>Total Liabilities</th><td class="num">$13,144,257</td></tr>
+    <tr><th>Net Assets</th><td class="num">$1,991,484</td></tr>
+    <tr><th>Total Equity</th><td class="num">$1,991,233</td></tr>
+  </tbody>
+</table>
+<p><strong>Action required before finalising:</strong> replace this with the March 2026 balance sheet summary.</p>
+
+<h2 class="section-title" id="forward-planning">9. Forward Planning</h2>
+<p><strong>[Steve to update]</strong></p>
+<ul>
+  <li>Strategic context</li>
+  <li>FY27 priorities</li>
+  <li>Key initiatives in progress</li>
+  <li>Risks to plan</li>
+  <li>Capital / cash considerations</li>
+</ul>
+
+<h2 class="section-title" id="actions">10. Actions for the Board</h2>
+<ol>
+  <li><strong>Note</strong> the March 2026 financial result.</li>
+  <li><strong>Note</strong> the FY26 year-end trading outcome, particularly the strong Urgent Couriers performance.</li>
+  <li><strong>Discuss</strong> the implications of continued underperformance in Urgent Cool.</li>
+  <li><strong>Discuss</strong> the commercialisation path and investment profile of DFRNT.</li>
+  <li><strong>Note</strong> that the final board issue requires an updated March 2026 balance sheet summary and, if desired, a consolidated DFRNT FY26 YTD presentation.</li>
+</ol>
+
+<h2 class="section-title" id="cleanup">11. Final cleanup list before issuing</h2>
+<ul>
+  <li>Add Steve commentary to Executive Summary.</li>
+  <li>Add strategic developments.</li>
+  <li>Add final operating highlights / challenges wording.</li>
+  <li>Refresh balance sheet to March 2026.</li>
+  <li>Confirm whether DFRNT US FY26 YTD is to be consolidated into the annual section.</li>
+  <li>Tighten H&amp;S section into a clean March / FY26 year-end summary.</li>
+  <li>Add any board-specific discussion / approval items.</li>
+</ul>
+
+<footer class="report-footer">
+  <span>Report prepared by Steve Bonnici, Managing Director</span>
+  <span>Draft financial base — 8 May 2026 · Urgent Group Board Pack</span>
+</footer>
+
+<script src="../assets/annotations.js"></script>
+<style>
+.toc-fab{position:fixed;bottom:24px;left:24px;z-index:100002;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.toc-fab-btn{width:48px;height:48px;border-radius:50%;background:#0d0c2c;color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:transform .2s,background .2s;display:flex;align-items:center;justify-content:center}
+.toc-fab-btn:hover{transform:scale(1.1);background:#3bc7f4}
+.toc-fab-btn.open{background:#3bc7f4;transform:rotate(45deg)}
+.toc-menu{display:none;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.18);padding:12px 0;min-width:280px;max-height:70vh;overflow-y:auto}
+.toc-menu.show{display:block}
+.toc-menu a{display:block;padding:8px 20px;color:#222;font-size:13px;font-weight:500;text-decoration:none;transition:background .15s}
+.toc-menu a:hover{background:#f0f7ff;color:#3bc7f4}
+.toc-menu a.active{border-left:3px solid #fe811a;background:#fff8f0;font-weight:700}
+.toc-menu .toc-menu-title{padding:8px 20px 4px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;font-weight:700}
+@media print{.toc-fab{display:none}}
+</style>
+<div class="toc-fab" id="tocFab">
+  <div class="toc-menu" id="tocMenu"></div>
+  <button class="toc-fab-btn" id="tocBtn" title="Table of Contents">☰</button>
+</div>
+<script>
+(function(){
+  const btn=document.getElementById('tocBtn'),menu=document.getElementById('tocMenu');
+  const sections=Array.from(document.querySelectorAll('h2.section-title[id]'));
+  menu.innerHTML='<div class="toc-menu-title">Contents</div>'+sections.map(s=>`<a href="#${s.id}" data-id="${s.id}">${s.textContent.replace(/^\d+\.\s*/,'')}</a>`).join('');
+  btn.onclick=()=>{menu.classList.toggle('show');btn.classList.toggle('open')};
+  menu.querySelectorAll('a').forEach(a=>a.onclick=()=>{menu.classList.remove('show');btn.classList.remove('open')});
+  const obs=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ menu.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.dataset.id===e.target.id)) }}) },{rootMargin:'-20% 0px -70% 0px'});
+  sections.forEach(s=>obs.observe(s));
+  document.addEventListener('click',e=>{if(!e.target.closest('.toc-fab')){menu.classList.remove('show');btn.classList.remove('open')}});
+})();
+</script>
+</body>
+</html>
